@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stun : MonoBehaviour
+public class Stun : IEffect
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void SetBuff(Stat stat)
     {
-        
+        duration = 1f;
+        stat.Accelerate = 0f;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void RemoveBuff(Stat stat)
     {
-        
+        duration = 0f;
+        stat.Accelerate = 1f;
     }
 }
