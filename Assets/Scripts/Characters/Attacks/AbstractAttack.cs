@@ -8,6 +8,9 @@ public abstract class AbstractAttack : MonoBehaviour
     [SerializeField]
     protected int _damage = 1;
     
+    [SerializeField]
+    private float _range = 0;
+    
     [SerializeField] 
     private float _cooltime = 1.5f;
 

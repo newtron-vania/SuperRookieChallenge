@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,24 @@ public class BaseCharacter : MonoBehaviour
 
     private BTMachine _btMachine;
 
+    private AbstractAttack _abstractAttack;
+    private AbstractSkill _abstractSkill;
+    private AbstractMove _abstractMove;
 
-    void Init(Define.ECharacterType id)
+    private Animator _animator;
+    private Rigidbody2D _rigidbody;
+    
+    private void Awake()
+    {
+        _abstractAttack = GetComponent<AbstractAttack>();
+        _abstractSkill = GetComponent<AbstractSkill>();
+        _abstractMove = GetComponent<AbstractMove>();
+
+        _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    public void Init(Define.ECharacterType id)
     {
         _id = id;
         switch (id)
@@ -18,7 +35,7 @@ public class BaseCharacter : MonoBehaviour
             case Define.ECharacterType.ECTPlayer:
                 break;
             case Define.ECharacterType.ECTEnemy:
-                break;
+                
             case Define.ECharacterType.ECTBoss:
                 break;
         }

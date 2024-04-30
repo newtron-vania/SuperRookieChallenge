@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class CharacterPool : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public void Init()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
