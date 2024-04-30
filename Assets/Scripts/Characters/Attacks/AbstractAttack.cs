@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public abstract class AbstractAttack : MonoBehaviour
 {
-    protected int _damage = 0;
+    [SerializeField]
+    protected int _damage = 1;
+    
+    [SerializeField] 
+    private float _cooltime = 1.5f;
+
+    [ReadOnly] 
+    private float _currentCooltime = 0f;
+
+    private List<BaseCharacter> targets;
 
     public int Damage
     {
         set { _damage = value; }
     }
-    public abstract bool Attack(List<BaseCharacter> targets);
+    public abstract bool Attack(Stat stat);
 
     public abstract bool IsInRange();
     
-    protected virtual void GiveDamage(BaseCharacter target)
+    protected virtual void GiveDamage(Stat stat, BaseCharacter target)
     {
-        target.GetComponent<Stat>().Hp -= _damage;
+        target.GetComponent<Stat>().Hp -= _damage * stat.Damage;
     }
 
 }

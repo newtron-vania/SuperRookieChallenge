@@ -2,28 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ECharacterType
-{
-    ECTEmpty,
-    ECTPlayer,
-    ECTEnemy,
-    ECTBoss
-}
 
 public class BaseCharacter : MonoBehaviour
 {
-    public ECharacterType id = ECharacterType.ECTEmpty;
+    public Define.ECharacterType _id = Define.ECharacterType.ECTEmpty;
 
     private BTMachine _btMachine;
-    
-    
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        // _btMachine = new BTMachine();
-    }
 
+
+    void Init(Define.ECharacterType id)
+    {
+        _id = id;
+        switch (id)
+        {
+            case Define.ECharacterType.ECTPlayer:
+                break;
+            case Define.ECharacterType.ECTEnemy:
+                break;
+            case Define.ECharacterType.ECTBoss:
+                break;
+        }
+    }
     public void Revive()
     {
         

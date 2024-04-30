@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Define
 {
-    public enum WorldObject
+    public enum ECharacterType
     {
-        Unknown,
-        Player,
-        Enemy,
+        ECTEmpty,
+        ECTPlayer,
+        ECTEnemy,
+        ECTBoss
     }
 
-    public enum Class
+    public enum EEffectName
     {
-        Near,
-        Range,
-        Splash,
+        None,
+        Stun,
+        Bleed,
+        Burned
     }
 
     public enum SceneType
