@@ -26,7 +26,11 @@ public abstract class AbstractAttack : MonoBehaviour
     public abstract bool Attack(Stat stat);
 
     public abstract bool IsInRange();
-    
+
+    public bool bCoolTime
+    {
+        get { return _currentCooltime > 0f; }
+    }
     protected virtual void GiveDamage(Stat stat, BaseCharacter target)
     {
         target.GetComponent<Stat>().Hp -= _damage * stat.Damage;

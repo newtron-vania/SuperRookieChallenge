@@ -6,18 +6,18 @@ public class Define
 {
     public enum ECharacterType
     {
-        ECTEmpty,
-        ECTPlayer,
-        ECTEnemy,
-        ECTBoss
+        ECT_Empty,
+        ECT_Player,
+        ECT_Enemy,
+        ECT_Boss
     }
 
     public enum EEffectName
     {
-        None,
-        Stun,
-        Bleed,
-        Burned
+        EEN_None,
+        EEN_Stun,
+        EEN_Bleed,
+        EEN_Burned
     }
 
     public enum SceneType

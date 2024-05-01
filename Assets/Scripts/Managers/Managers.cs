@@ -14,10 +14,12 @@ public class Managers : MonoBehaviour
 
     private ResourceManager _resource = new ResourceManager();
     private SceneManagerEx _scene = new SceneManagerEx();
+    private PoolManager _pool = new PoolManager();
 
 
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
+    public static PoolManager Pool{ get{ return Instance._pool; } }
 
     #endregion
 
@@ -41,6 +43,8 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
             _instance = go.GetComponent<Managers>();
         }
+        
+        Pool.Init();
     }
 
     private void Update()
@@ -52,7 +56,4 @@ public class Managers : MonoBehaviour
     {
 
     }
-
-
-
 }

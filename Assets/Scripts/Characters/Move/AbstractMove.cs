@@ -12,5 +12,5 @@ public abstract class AbstractMove : MonoBehaviour
         
     }
     // 다음 이동 좌표 반환 및 이동 성공 여부 확인
-    public abstract bool Move(Stat stat);
+    public abstract bool Move();
 }

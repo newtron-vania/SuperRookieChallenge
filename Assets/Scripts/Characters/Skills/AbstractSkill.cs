@@ -35,5 +35,9 @@ public abstract class AbstractSkill : MonoBehaviour
     }
     public abstract bool IsInRange();
 
+    public bool bCoolTime
+    {
+        get { return _currentCooltime > 0f; }
+    }
     public abstract bool UseSkill();
 }

@@ -7,6 +7,18 @@ public class ResourceManager
     
     public T Load<T>(string path) where T:Object
     {
+        if(typeof(T) == typeof(GameObject))
+        {
+            string name = path;
+            int index = name.LastIndexOf('/');
+            if (index >= 0)
+                name = name.Substring(index + 1);
+
+            GameObject go = Managers.Pool.GetOriginal(name);
+            if (go != null)
+                return go as T;
+        }
+
         return Resources.Load<T>(path);
     }
 
@@ -18,7 +30,7 @@ public class ResourceManager
         if (original == null)
         {
             Debug.Log($"Faild to sprite : {path}");
-            return null;
+            original = Resources.Load<Sprite>($"Sprites/NullErrorImg/Error");
         }
         return original;
 
@@ -32,6 +44,10 @@ public class ResourceManager
             Debug.Log($"Faild to load prefab : {path}");
             return null;
         }
+
+        if (original.GetComponent<Poolable>() != null)
+            return Managers.Pool.Pop(original, parent).gameObject;
+
 
         GameObject go = Object.Instantiate(original, parent);
         go.name = original.name;
@@ -47,16 +63,52 @@ public class ResourceManager
             return null;
         }
 
-        GameObject go = Object.Instantiate(original, position, Quaternion.identity, parent);
+        GameObject go = null;
+        if (original.GetComponent<Poolable>() != null)
+        {
+            go = Managers.Pool.Pop(original, parent).gameObject;
+            go.transform.position = position;
+            return go;
+        }
+
+
+        go = Object.Instantiate(original, position, Quaternion.identity, parent);
         go.name = original.name;
 
         return go;
     }
 
+    public GameObject Instantiate(GameObject original, Vector3 position, Transform parent = null)
+    {
+        GameObject go = null;
+        if (original.GetComponent<Poolable>() != null)
+        {
+            go = Managers.Pool.Pop(original, parent).gameObject;
+            go.transform.position = position;
+            return go;
+        }
+           
+
+
+        go = Object.Instantiate(original, position, Quaternion.identity, parent);
+        go.name = original.name;
+
+        return go;
+    }
+
+
     public void Destroy(GameObject obj, float time = 0)
     {
         if(obj == null)
         {
+            return;
+        }
+
+        
+        Poolable poolable = obj.GetComponent<Poolable>();
+        if(poolable != null)
+        {
+            Managers.Pool.Push(poolable, time);
             return;
         }
 

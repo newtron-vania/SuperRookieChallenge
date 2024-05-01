@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour
 {
-    public Define.ECharacterType _id = Define.ECharacterType.ECTEmpty;
+    public Define.ECharacterType _id = Define.ECharacterType.ECT_Empty;
 
     private BTMachine _btMachine;
 
@@ -14,55 +14,83 @@ public class BaseCharacter : MonoBehaviour
     private AbstractSkill _abstractSkill;
     private AbstractMove _abstractMove;
 
+    private Stat _stat;
     private Animator _animator;
     private Rigidbody2D _rigidbody;
+
+    private Transform target;
     
     private void Awake()
     {
         _abstractAttack = GetComponent<AbstractAttack>();
         _abstractSkill = GetComponent<AbstractSkill>();
         _abstractMove = GetComponent<AbstractMove>();
+        _stat = GetComponent<Stat>();
 
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(Define.ECharacterType id)
+    public void SetBehaviourTree(BTMachine btMachine)
     {
-        _id = id;
-        switch (id)
-        {
-            case Define.ECharacterType.ECTPlayer:
-                break;
-            case Define.ECharacterType.ECTEnemy:
-                
-            case Define.ECharacterType.ECTBoss:
-                break;
-        }
-    }
-    public void Revive()
-    {
-        
+        _btMachine = btMachine;
     }
 
-    public void Dead()
+    private void Update()
     {
-        
+        _btMachine?.Operate();
     }
-
+    //공격 이벤트
     public void Attack()
     {
         
     }
 
-    public void Move()
+    public void UseSkill()
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    //이동 이벤트
+    public void Move()
     {
-        _btMachine?.Operate();
+        _abstractMove.Move();
     }
+
+    public void Victory()
+    {
+        _animator.Play("victory");
+    }
+
+    public void Hurt(float damage)
+    {
+        _stat.Hp -= damage;
+        if (_stat.Hp <= 0)
+        {
+            Dead();
+        }
+    }
+
+    public void Idle()
+    {
+        _animator.Play("idle");
+    }
+    
+    public void Dead()
+    {
+        
+    }
+    
+    public void Revive()
+    {
+        
+    }
+    
+    public bool IsDead() => _stat.Hp <= 0;
+    public bool IsAnimationPlaying(string animName) => _animator.GetCurrentAnimatorStateInfo(0).IsName(animName);
+    public bool IsAttackCooldown() => _abstractAttack.bCoolTime;
+    public bool IsSkillCooldown() => _abstractSkill.bCoolTime;
+    public bool IsAttackRange() => _abstractAttack.IsInRange();
+    public bool IsSkillRange() => _abstractSkill.IsInRange();
+
+
 }

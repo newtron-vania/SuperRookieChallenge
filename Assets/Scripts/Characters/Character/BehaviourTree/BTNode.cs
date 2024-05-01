@@ -14,20 +14,28 @@ public interface IBTNode
 
     public ENodeState Evaluate();
 }
-
-
-public sealed class ActionNode : IBTNode
-{
-    Func<IBTNode.ENodeState> _onUpdate = null;
-
-    public ActionNode(Func<IBTNode.ENodeState> onUpdate)
-    {
-        _onUpdate = onUpdate;
+public class ConditionNode : IBTNode {
+    Func<bool> _condition;
+    public ConditionNode(Func<bool> condition) {
+        _condition = condition;
     }
 
-    public IBTNode.ENodeState Evaluate() => _onUpdate?.Invoke() ?? IBTNode.ENodeState.ENS_Failure;
+    public IBTNode.ENodeState Evaluate() {
+        return _condition() ? IBTNode.ENodeState.ENS_Success : IBTNode.ENodeState.ENS_Failure;
+    }
 }
 
+public class ActionNode : IBTNode {
+    Action _action;
+    public ActionNode(Action action) {
+        _action = action;
+    }
+
+    public IBTNode.ENodeState Evaluate() {
+        _action();
+        return IBTNode.ENodeState.ENS_Success;
+    }
+}
 public sealed class SelectorNode : IBTNode
 {
     List<IBTNode> _childs;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class SimpleEnemyMove : AbstractMove
 {
 
-    public override bool Move(Stat stat)
+    public override bool Move()
     {
         
         return true;

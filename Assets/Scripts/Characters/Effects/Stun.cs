@@ -6,7 +6,7 @@ public class Stun : IEffect
 {
     public override Define.EEffectName _effectID
     {
-        get { return Define.EEffectName.Stun; }
+        get { return Define.EEffectName.EEN_Stun; }
     }
 
     public override void SetBuff(Stat stat)
