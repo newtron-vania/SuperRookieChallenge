@@ -31,6 +31,16 @@ public class BaseCharacter : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    private void InitStrategy()
+    {
+        _abstractAttack = GetComponent<AbstractAttack>();
+        _abstractAttack.Init(this, _stat);
+        _abstractSkill = GetComponent<AbstractSkill>();
+        _abstractSkill.Init(this, _stat);
+        _abstractMove = GetComponent<AbstractMove>();
+        _abstractMove.Init(this, _stat);
+    }
+
     public void SetBehaviourTree(BTMachine btMachine)
     {
         _btMachine = btMachine;

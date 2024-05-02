@@ -1,44 +1,39 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-//장애물이 있는 경로는 이동할 수 없는 MoveType 구현 클래스
-public class SimpleCharacterMove : AbstractMove
+public class SimpleAttack : AbstractAttack
 {
     [SerializeField] 
-    private float _range = 0f;
+    private RaycastHit2D[] targets; 
     
-    public override bool Move()
+    public override bool Attack()
     {
-        if (bhasTarget())
+        if (!IsInRange())
         {
-            FindTarget();
             return false;
-        }
-
-        Vector3 dir = (_target.position - transform.position).normalized;
-        transform.position += dir * Time.deltaTime * _stat.Accelerate;
-        
-        return true;
-    }
-    
-    private void FindTarget()
-    {
-        Vector3 myPos = transform.position;
-        RaycastHit2D[] targets = Physics2D.CircleCastAll(myPos, 0f, Vector2.up, SetTargetLayer());
-
-        if (targets.Length <= 0)
-        {
-            _target = null;
-            return;
         }
         
         Array.Sort(targets, (hit1, hit2) => hit1.distance.CompareTo(hit2.distance));
 
-        _target = targets[0].transform;
+        BaseCharacter target = targets[0].transform.GetComponent<BaseCharacter>();
+        target.Hurt(_damage * _stat.Damage);
+
+        return true;
     }
-    
+
+    public override bool IsInRange()
+    {
+        Vector3 myPos = transform.position;
+        targets = Physics2D.CircleCastAll(myPos, 0f, Vector2.up, SetTargetLayer());
+
+        if (targets.Length <= 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     private int SetTargetLayer()
     {
         // Create layer masks by specifying the layers you are interested in

@@ -37,7 +37,7 @@ public abstract class AbstractAttack : MonoBehaviour
         _character = character;
         _stat = stat;
     }
-    public abstract bool Attack(Stat stat);
+    public abstract bool Attack();
 
     public abstract bool IsInRange();
 

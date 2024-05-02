@@ -9,7 +9,7 @@ public class SimpleDamageSkill : AbstractSkill
     public override bool IsInRange()
     {
         Vector3 myPos = transform.position;
-        targets = Physics2D.CircleCastAll(myPos, 0f, Vector2.up, LayerMask.GetMask("monster"));
+        targets = Physics2D.CircleCastAll(myPos, 0f, Vector2.up, SetTargetLayer());
 
         if (targets.Length <= 0)
         {
@@ -19,6 +19,20 @@ public class SimpleDamageSkill : AbstractSkill
         return true;
     }
 
+    private int SetTargetLayer()
+    {
+        // Create layer masks by specifying the layers you are interested in
+        int monsterLayerMask = 1 << LayerMask.NameToLayer("monster");
+        int playerLayerMask = 1 << LayerMask.NameToLayer("player");
+
+        // Combine the masks using bitwise OR
+        int combinedMask = monsterLayerMask | playerLayerMask;
+
+        // Exclude this GameObject's layer using bitwise operations
+        int finalMask = combinedMask & ~(1 << gameObject.layer);
+
+        return finalMask;
+    }
     public override bool UseSkill()
     {
         if (!IsInRange())
