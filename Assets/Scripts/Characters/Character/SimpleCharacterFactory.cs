@@ -42,6 +42,8 @@ public class SimpleCharacterFactory
                 //보스 효과 부여
                 break;
         }
+        
+        character.SetBehaviourTree(BTM);
     }
 
     private BTMachine CreateBTMPlayer(BaseCharacter character)

@@ -37,11 +37,11 @@ public class BaseCharacter : MonoBehaviour
     private void InitStrategy()
     {
         _abstractAttack = GetComponent<AbstractAttack>();
-        _abstractAttack.Init(this, _stat);
+        _abstractAttack?.Init(this, _stat);
         _abstractSkill = GetComponent<AbstractSkill>();
-        _abstractSkill.Init(this, _stat);
+        _abstractSkill?.Init(this, _stat);
         _abstractMove = GetComponent<AbstractMove>();
-        _abstractMove.Init(this, _stat);
+        _abstractMove?.Init(this, _stat);
     }
 
     public void SetBehaviourTree(BTMachine btMachine)
@@ -56,12 +56,13 @@ public class BaseCharacter : MonoBehaviour
     //공격 이벤트
     public void Attack()
     {
-        
+        _animator.Play("attack");
+        _abstractAttack?.Attack();
     }
 
     public void UseSkill()
     {
-        
+        _abstractSkill?.UseSkill();
     }
     //이동 이벤트
     public bool Move()
@@ -96,6 +97,7 @@ public class BaseCharacter : MonoBehaviour
     {
         _animator.Play("Death");
         _abstractMove.ClearTarget();
+        DeathActionEvent?.Invoke(this);
     }
 
     public void AnimationDeadEnd()
@@ -111,10 +113,10 @@ public class BaseCharacter : MonoBehaviour
     
     public bool IsDead() => _stat.Hp <= 0;
     public bool IsAnimationPlaying(string animName) => _animator.GetCurrentAnimatorStateInfo(0).IsName(animName);
-    public bool IsAttackCooldown() => _abstractAttack.bCoolTime;
-    public bool IsSkillCooldown() => _abstractSkill.bCoolTime;
-    public bool IsAttackRange() => _abstractAttack.IsInRange();
-    public bool IsSkillRange() => _abstractSkill.IsInRange();
+    public bool IsAttackCooldown() => _abstractAttack ? _abstractAttack.bCoolTime : false;
+    public bool IsSkillCooldown() => _abstractSkill ? _abstractSkill.bCoolTime : false;
+    public bool IsAttackRange() => _abstractAttack ? _abstractAttack.IsInRange() : false;
+    public bool IsSkillRange() => _abstractSkill ? _abstractSkill.IsInRange() : false;
 
 
 }
