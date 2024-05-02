@@ -27,9 +27,7 @@ public class BaseCharacter : MonoBehaviour
     private void Awake()
     {
         _effectController = GetComponent<EffectController>();
-        _abstractAttack = GetComponent<AbstractAttack>();
-        _abstractSkill = GetComponent<AbstractSkill>();
-        _abstractMove = GetComponent<AbstractMove>();
+        InitStrategy();
         _stat = GetComponent<Stat>();
 
         _animator = GetComponent<Animator>();
@@ -64,6 +62,7 @@ public class BaseCharacter : MonoBehaviour
 
     public void UseSkill()
     {
+        PlayAnimation("attack");
         _abstractSkill?.UseSkill();
     }
     //이동 이벤트
@@ -131,6 +130,10 @@ public class BaseCharacter : MonoBehaviour
     public bool IsSkillCooldown() => _abstractSkill ? _abstractSkill.bCoolTime : false;
     public bool IsAttackRange() => _abstractAttack ? _abstractAttack.IsInRange() : false;
     public bool IsSkillRange() => _abstractSkill ? _abstractSkill.IsInRange() : false;
-
+    public bool IsOnlyWalkOrIdleAnimationPlaying()
+    {
+        var currentAnimation = _animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+        return currentAnimation == Animator.StringToHash("walk") || currentAnimation == Animator.StringToHash("idle");
+    }
 
 }

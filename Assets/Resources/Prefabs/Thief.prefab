@@ -611,8 +611,8 @@ GameObject:
   - component: {fileID: 4297804498557017015}
   - component: {fileID: 4659933104270707958}
   - component: {fileID: 8643456919696954491}
-  - component: {fileID: -4367922361115493275}
   - component: {fileID: -6486327828448217997}
+  - component: {fileID: 7956260720333949359}
   m_Layer: 0
   m_Name: Thief
   m_TagString: Untagged
@@ -683,8 +683,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lv: 0
-  _hp: 100
-  _maxHp: 100
+  _hp: 200
+  _maxHp: 200
   _damage: 10
   _attackRange: 0
   _accelerate: 1
@@ -787,21 +787,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _range: 1
-  _cooltime: 1.5
---- !u!114 &-4367922361115493275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000012663239756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e723846d93470aac081b0e1bcd856d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 0
-  _range: 0
   _cooltime: 1
 --- !u!114 &-6486327828448217997
 MonoBehaviour:
@@ -816,6 +801,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &7956260720333949359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012663239756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4767a9911074ffbaf3cc36fdadca6e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 1
+  _range: 2
+  _cooltime: 3
 --- !u!1 &1000012730742446
 GameObject:
   m_ObjectHideFlags: 0

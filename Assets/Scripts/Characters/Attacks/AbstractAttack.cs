@@ -13,7 +13,7 @@ public abstract class AbstractAttack : MonoBehaviour
     protected int _damage = 1;
     
     [SerializeField]
-    private float _range = 0;
+    protected float _range = 0;
     
     [SerializeField] 
     private float _cooltime = 1.5f;

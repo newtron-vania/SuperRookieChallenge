@@ -29,11 +29,16 @@ public class MonsterPool : MonoBehaviour
 
     private bool bBossSpawn = false;
     public void AddKillCount(int value) { _killCount += value; }
-    private void Start()
+
+    public void Init()
     {
         _monsterFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Enemy);
         _bossFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Boss);
-        _spawnPoint = GetComponentsInChildren<Transform>();
+        _spawnPoint = GetComponentsInChildren<Transform>(false);
+    }
+    private void Start()
+    {
+        Init();
     }
 
     private void Update()

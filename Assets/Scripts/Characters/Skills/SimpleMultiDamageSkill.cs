@@ -9,7 +9,7 @@ public class SimpleMultiDamageSkill : AbstractSkill
     public override bool IsInRange()
     {
         Vector3 myPos = transform.position;
-        targets = Physics2D.CircleCastAll(myPos, 0f, Vector2.up, SetTargetLayer());
+        targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, SetTargetLayer());
 
         if (targets.Length <= 0)
         {

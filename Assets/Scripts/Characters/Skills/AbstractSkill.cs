@@ -15,7 +15,7 @@ public abstract class AbstractSkill : MonoBehaviour
     protected float _damage = 0;
     
     [SerializeField]
-    private float _range = 0;
+    protected float _range = 0;
 
     [SerializeField] 
     private float _cooltime = 1f;

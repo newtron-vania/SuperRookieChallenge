@@ -16,7 +16,18 @@ public class SimpleAttack : AbstractAttack
         Array.Sort(targets, (hit1, hit2) => hit1.distance.CompareTo(hit2.distance));
 
         BaseCharacter target = targets[0].transform.GetComponent<BaseCharacter>();
+        
         target.Hurt(_damage * _stat.Damage);
+        
+        Vector3 scale = _character.transform.localScale;
+        if (_character.transform.position.x < target.transform.position.x)
+        {
+            _character.transform.localScale = new Vector3(-1 * Mathf.Abs(scale.x), scale.y, scale.z);
+        }
+        else
+        {
+            _character.transform.localScale = new Vector3(1 * Mathf.Abs(scale.x), scale.y, scale.z);
+        }
 
         return true;
     }
@@ -24,7 +35,7 @@ public class SimpleAttack : AbstractAttack
     public override bool IsInRange()
     {
         Vector3 myPos = transform.position;
-        targets = Physics2D.CircleCastAll(myPos, 0f, Vector2.up, SetTargetLayer());
+        targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, SetTargetLayer());
 
         if (targets.Length <= 0)
         {

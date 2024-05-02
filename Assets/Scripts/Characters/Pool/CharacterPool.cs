@@ -20,8 +20,13 @@ public class CharacterPool : MonoBehaviour
 
     public void Init()
     {
-        _spawnPoint = GetComponentsInChildren<Transform>();
+        _spawnPoint = GetComponentsInChildren<Transform>(false);
         _factory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Player);
+    }
+
+    private void Awake()
+    {
+        Init();
     }
 
     public void Start()

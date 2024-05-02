@@ -179,7 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _range: 4
-  _cooltime: 1.5
+  _cooltime: 1
 --- !u!114 &8807358032540732236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,9 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7280ea771324fcfa4cb60b6efdb4fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
-  _range: 0
-  _cooltime: 1
+  _damage: 2.5
+  _range: 4
+  _cooltime: 4
 --- !u!114 &-573633672399427036
 MonoBehaviour:
   m_ObjectHideFlags: 0

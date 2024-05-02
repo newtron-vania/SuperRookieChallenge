@@ -23,8 +23,18 @@ public class SimpleCharacterMove : AbstractMove
             return false;
         }
         
-        Vector3 dir = (_target.position - transform.position).normalized;
-        transform.position += Time.deltaTime * _stat.Accelerate * dir;
+        Vector3 dir = (_target.position - _character.transform.position).normalized;
+        _character.transform.position += Time.deltaTime * _stat.Accelerate * dir;
+
+        Vector3 scale = _character.transform.localScale;
+        if (_character.transform.position.x < _target.transform.position.x)
+        {
+            _character.transform.localScale = new Vector3(-1 * Mathf.Abs(scale.x), scale.y, scale.z);
+        }
+        else
+        {
+            _character.transform.localScale = new Vector3(1 * Mathf.Abs(scale.x), scale.y, scale.z);
+        }
         
         return true;
     }
@@ -32,7 +42,7 @@ public class SimpleCharacterMove : AbstractMove
     private void FindTarget()
     {
         Vector3 myPos = transform.position;
-        RaycastHit2D[] targets = Physics2D.CircleCastAll(myPos, 0f, Vector2.up, SetTargetLayer());
+        RaycastHit2D[] targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, SetTargetLayer());
 
         if (targets.Length <= 0)
         {

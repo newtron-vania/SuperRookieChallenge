@@ -357,8 +357,8 @@ GameObject:
   - component: {fileID: 8918696189639941129}
   - component: {fileID: -7236549600006781209}
   - component: {fileID: -3384373776088172810}
-  - component: {fileID: 5281245386956142411}
   - component: {fileID: -4902645743299122943}
+  - component: {fileID: -4457546971541377789}
   m_Layer: 0
   m_Name: Priest
   m_TagString: Untagged
@@ -533,21 +533,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _range: 4
-  _cooltime: 1.5
---- !u!114 &5281245386956142411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000013034572668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7280ea771324fcfa4cb60b6efdb4fd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 0
-  _range: 0
   _cooltime: 1
 --- !u!114 &-4902645743299122943
 MonoBehaviour:
@@ -562,6 +547,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &-4457546971541377789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013034572668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e723846d93470aac081b0e1bcd856d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 2.5
+  _range: 4
+  _cooltime: 6
 --- !u!1 &1000013226060160
 GameObject:
   m_ObjectHideFlags: 0

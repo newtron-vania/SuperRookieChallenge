@@ -32,7 +32,7 @@ public class SimpleEnemyMove : AbstractMove
     private void FindTarget()
     {
         Vector3 myPos = transform.position;
-        RaycastHit2D[] targets = Physics2D.CircleCastAll(myPos, 0f, Vector2.up, SetTargetLayer());
+        RaycastHit2D[] targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, SetTargetLayer());
 
         if (targets.Length <= 0)
         {
