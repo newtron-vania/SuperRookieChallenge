@@ -1,27 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterPool : MonoBehaviour
 {
+    [SerializeField] 
+    private Transform[] _spawnPoint;
+
+    [SerializeField] 
+    private string[] _spawnCharacterName;
+    
+    [SerializeField]
+    private float _spawnTime = 5f;
+    
     private List<BaseCharacter> _characterList = new List<BaseCharacter>();
     private List<float> _characterReviveTime = new List<float>();
     private SimpleCharacterFactory _factory;
+
     public void Init()
     {
+        _spawnPoint = GetComponentsInChildren<Transform>();
         _factory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Player);
-        _characterList.Add(_factory.Create("Knight"));
-        _characterReviveTime.Add(0f);
-        _characterList[0].DeathActionEvent += CheckCharacterDeath;
-        _characterList.Add(_factory.Create("Archer"));
-        _characterReviveTime.Add(0f);
-        _characterList[1].DeathActionEvent += CheckCharacterDeath;
-        _characterList.Add(_factory.Create("Priest"));
-        _characterReviveTime.Add(0f);
-        _characterList[2].DeathActionEvent += CheckCharacterDeath;
-        _characterList.Add(_factory.Create("Thief"));
-        _characterReviveTime.Add(0f);
-        _characterList[3].DeathActionEvent += CheckCharacterDeath;
+    }
+
+    public void Start()
+    {
+        for (int i = 0; i < _spawnCharacterName.Length; i++)
+        {
+            _characterList.Add(_factory.Create(_spawnCharacterName[i]));
+            _characterReviveTime.Add(0f);
+            _characterList[i].transform.position = _spawnPoint[i].position;
+        }
     }
 
     public bool GameOver()
@@ -48,7 +58,7 @@ public class CharacterPool : MonoBehaviour
             return;
         }
 
-        _characterReviveTime[index] = 5f;
+        _characterReviveTime[index] = _spawnTime;
     }
     void Update()
     {

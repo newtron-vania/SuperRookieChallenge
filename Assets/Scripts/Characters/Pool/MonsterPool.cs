@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class MonsterPool : MonoBehaviour
 {
-    public Transform[] _spawnPoint;
+    [SerializeField]
+    private Transform[] _spawnPoint;
     
     [SerializeField]
     private string _spawnMonsterName = "Monster";
@@ -19,10 +20,7 @@ public class MonsterPool : MonoBehaviour
     private bool _bSpawning = false;
     
     HashSet<BaseCharacter> _spawnUnit = new HashSet<BaseCharacter>();
-
-    [SerializeField]
-    int _maxSpawnUnit = 50;
-
+    
     [ReadOnly]
     private int _killCount = 0;
 
@@ -36,8 +34,6 @@ public class MonsterPool : MonoBehaviour
         _monsterFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Enemy);
         _bossFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Boss);
         _spawnPoint = GetComponentsInChildren<Transform>();
-        //Managers.Game._OnSpawnEvent -= AddKillCount;
-        //Managers.Game._OnSpawnEvent += AddKillCount;
     }
 
     private void Update()
@@ -67,6 +63,8 @@ public class MonsterPool : MonoBehaviour
         _bSpawning = true;
         BaseCharacter monster = _monsterFactory.Create(_spawnMonsterName);
         _spawnUnit.Add(monster);
+        monster.DeathActionEvent -= CheckMonsterDeath;
+        monster.DeathActionEvent += CheckMonsterDeath;
         monster.transform.position = _spawnPoint[Random.Range(1, _spawnPoint.Length)].position;
         yield return new WaitForSeconds(_spawnTime);
         _bSpawning = false;
@@ -75,6 +73,7 @@ public class MonsterPool : MonoBehaviour
     private void CheckMonsterDeath(BaseCharacter character)
     {
         _spawnUnit.Remove(character);
+        Managers.Resource.Destroy(character.gameObject);
         AddKillCount(1);
     }
 
