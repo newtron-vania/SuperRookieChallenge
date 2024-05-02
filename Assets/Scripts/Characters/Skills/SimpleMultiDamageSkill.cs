@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class SimpleDamageSkill : AbstractSkill
+public class SimpleMultiDamageSkill : AbstractSkill
 {
     [SerializeField] 
     private RaycastHit2D[] targets; 
@@ -39,13 +39,15 @@ public class SimpleDamageSkill : AbstractSkill
         {
             return false;
         }
+
+        foreach (var VARIABLE in targets)
+        {
+            BaseCharacter target = VARIABLE.transform.GetComponent<BaseCharacter>();
+            
+            target.Hurt(_damage * _stat.Damage);
+            target.SetBuff(_effect);
+        }
         
-        Array.Sort(targets, (hit1, hit2) => hit1.distance.CompareTo(hit2.distance));
-
-        BaseCharacter target = targets[0].transform.GetComponent<BaseCharacter>();
-        target.Hurt(_damage * _stat.Damage);
-        target.SetBuff(_effect);
-
         ResetCooltime();
         
         return true;

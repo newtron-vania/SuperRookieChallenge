@@ -12,16 +12,16 @@ public abstract class IEffect : MonoBehaviour
     // 다음 효과
     private IEffect _effect;
     // 버프 지속시간
-    protected float duration = 0;
+    protected float _duration = 0f;
     
     public bool bEnd()
     {
-        return duration <= 0;
+        return _duration <= 0;
     }
 
     public void onUpdate()
     {
-        duration = Mathf.Max(duration - Time.deltaTime, 0);
+        _duration = Mathf.Max(_duration - Time.deltaTime, 0);
     }
 
     public void ApplyEffect(IEffect effect)
@@ -36,7 +36,7 @@ public abstract class IEffect : MonoBehaviour
 
     public void SetDuration(float time)
     {
-        duration = MathF.Max(duration, time);
+        _duration = MathF.Max(_duration, time);
     }
     public abstract void SetBuff(Stat stat);
 

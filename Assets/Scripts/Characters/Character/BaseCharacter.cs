@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -14,7 +15,7 @@ public class BaseCharacter : MonoBehaviour
     private AbstractSkill _abstractSkill;
     private AbstractMove _abstractMove;
 
-    private EffectController _effectController = new EffectController();
+    private EffectController _effectController;
 
     private Stat _stat;
     private Animator _animator;
@@ -25,6 +26,7 @@ public class BaseCharacter : MonoBehaviour
     
     private void Awake()
     {
+        _effectController = GetComponent<EffectController>();
         _abstractAttack = GetComponent<AbstractAttack>();
         _abstractSkill = GetComponent<AbstractSkill>();
         _abstractMove = GetComponent<AbstractMove>();
@@ -56,7 +58,7 @@ public class BaseCharacter : MonoBehaviour
     //공격 이벤트
     public void Attack()
     {
-        _animator.Play("attack");
+        PlayAnimation("attack");
         _abstractAttack?.Attack();
     }
 
@@ -69,14 +71,14 @@ public class BaseCharacter : MonoBehaviour
     {
         if (!this.IsAnimationPlaying("walk"))
         {
-            _animator.Play("walk");
+            PlayAnimation("walk");
         }
         return _abstractMove.Move();
     }
 
     public void Victory()
     {
-        _animator.Play("victory");
+        PlayAnimation("victory");
     }
 
     public void Hurt(float damage)
@@ -90,13 +92,14 @@ public class BaseCharacter : MonoBehaviour
 
     public void Idle()
     {
-        _animator.Play("idle");
+        PlayAnimation("idle");
     }
     
     public void Dead()
     {
-        _animator.Play("Death");
+        PlayAnimation("death");
         _abstractMove.ClearTarget();
+        _effectController.Clear();
         DeathActionEvent?.Invoke(this);
     }
 
@@ -109,6 +112,17 @@ public class BaseCharacter : MonoBehaviour
     {
         _stat.Hp = _stat.MaxHp;
         this.gameObject.SetActive(true);
+    }
+    
+    // 버프 및 디버프 처리
+    public void SetBuff(IEffect effect)
+    {
+        _effectController.Add(effect);
+    }
+
+    private void PlayAnimation(string name)
+    {
+        _animator.Play(name, -1, 0f);
     }
     
     public bool IsDead() => _stat.Hp <= 0;

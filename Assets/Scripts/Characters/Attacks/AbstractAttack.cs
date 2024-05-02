@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -44,5 +45,10 @@ public abstract class AbstractAttack : MonoBehaviour
     protected virtual void GiveDamage(Stat stat, BaseCharacter target)
     {
         target.GetComponent<Stat>().Hp -= _damage * stat.Damage;
+    }
+
+    private void OnDisable()
+    {
+        _currentCooltime = 0f;
     }
 }

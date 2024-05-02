@@ -17,7 +17,8 @@ public class Define
         EEN_None,
         EEN_Stun,
         EEN_Bleed,
-        EEN_Burned
+        EEN_Burned,
+        EEN_Boss,
     }
 
     public enum SceneType

@@ -40,6 +40,7 @@ public class SimpleCharacterFactory
             case Define.ECharacterType.ECT_Boss:
                 BTM = CreateBTMEnemy(character);
                 //보스 효과 부여
+                character.SetBuff(new BossEffect());
                 break;
         }
         
@@ -80,14 +81,33 @@ public class SimpleCharacterFactory
 
     private BTMachine CreateBTMEnemy(BaseCharacter character)
     {
-        // 적 행동 트리 생성 로직
-        List<IBTNode> nodes = new List<IBTNode>()
-        {
-            //new ActionNode(() => { /* 공격 타이밍 체크 로직 */ }),
-            // 추가 노드 구현
-        };
-        SelectorNode rootNode = new SelectorNode(nodes);
+        var rootNode = new SelectorNode(new List<IBTNode> {
+            new SequenceNode(new List<IBTNode> { // Check Death
+                new ConditionNode(() => character.IsDead()),
+                new ActionNode(() => character.Dead())
+            }),
+            new SequenceNode(new List<IBTNode> { // Handle Attack
+                new ConditionNode(() => !character.IsAnimationPlaying("attack")),
+                new ConditionNode(() => character.IsAttackRange()),
+                new ConditionNode(() => !character.IsAttackCooldown()),
+                new ActionNode(() => character.Attack())
+            }),
+            new SequenceNode(new List<IBTNode> { // Handle Skills
+                new ConditionNode(() => !character.IsAnimationPlaying("attack")),
+                new ConditionNode(() => character.IsSkillRange()),
+                new ConditionNode(() => !character.IsSkillCooldown()),
+                new ActionNode(() => character.UseSkill())
+            }),
+            new SequenceNode(new List<IBTNode> { // Handle Movement
+                new ConditionNode(() => character.Move())
+            }),
+            new SequenceNode(new List<IBTNode>
+            {
+                new ConditionNode(() => !character.IsAnimationPlaying("idle")),
+                new ActionNode(() => character.Idle())
+            })
+        });
+        
         return new BTMachine(rootNode);
     }
-    
 }

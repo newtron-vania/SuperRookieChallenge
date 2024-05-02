@@ -43,6 +43,15 @@ public class EffectController : MonoBehaviour
         }
         _removeList.Clear();
     }
+
+    public void Clear()
+    {
+        foreach (var effect in _effectDict)
+        {
+            effect.Value.RemoveBuff(_stat);
+        }
+        _effectDict.Clear();
+    }
     
 
 }

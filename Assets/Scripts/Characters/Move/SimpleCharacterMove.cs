@@ -17,6 +17,12 @@ public class SimpleCharacterMove : AbstractMove
             return false;
         }
 
+        if ((_target.position - transform.position).magnitude < 0.1f)
+        {
+            Debug.Log($"Too Near with target : {(_target.position - transform.position).magnitude}");
+            return false;
+        }
+        
         Vector3 dir = (_target.position - transform.position).normalized;
         transform.position += Time.deltaTime * _stat.Accelerate * dir;
         

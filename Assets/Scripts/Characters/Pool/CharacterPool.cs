@@ -6,21 +6,22 @@ public class CharacterPool : MonoBehaviour
 {
     private List<BaseCharacter> _characterList = new List<BaseCharacter>();
     private List<float> _characterReviveTime = new List<float>();
-    private SimpleCharacterFactory _factory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Player);
+    private SimpleCharacterFactory _factory;
     public void Init()
     {
+        _factory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Player);
         _characterList.Add(_factory.Create("Knight"));
         _characterReviveTime.Add(0f);
-        _characterList[0].DeathActionEvent += CheckCharacterDead;
-        _characterList.Add(_factory.Create("Peasant"));
+        _characterList[0].DeathActionEvent += CheckCharacterDeath;
+        _characterList.Add(_factory.Create("Archer"));
         _characterReviveTime.Add(0f);
-        _characterList[1].DeathActionEvent += CheckCharacterDead;
+        _characterList[1].DeathActionEvent += CheckCharacterDeath;
         _characterList.Add(_factory.Create("Priest"));
         _characterReviveTime.Add(0f);
-        _characterList[2].DeathActionEvent += CheckCharacterDead;
+        _characterList[2].DeathActionEvent += CheckCharacterDeath;
         _characterList.Add(_factory.Create("Thief"));
         _characterReviveTime.Add(0f);
-        _characterList[3].DeathActionEvent += CheckCharacterDead;
+        _characterList[3].DeathActionEvent += CheckCharacterDeath;
     }
 
     public bool GameOver()
@@ -37,7 +38,7 @@ public class CharacterPool : MonoBehaviour
         return isOver;
     }
 
-    private void CheckCharacterDead(BaseCharacter character)
+    private void CheckCharacterDeath(BaseCharacter character)
     {
         int index = _characterList.IndexOf(character);
         if (index == -1)

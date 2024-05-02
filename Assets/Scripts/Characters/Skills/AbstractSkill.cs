@@ -9,7 +9,7 @@ public abstract class AbstractSkill : MonoBehaviour
     protected BaseCharacter _character;
     protected Stat _stat;
     
-    private IEffect _effect;
+    protected IEffect _effect;
 
     [SerializeField] 
     protected float _damage = 0;
@@ -61,4 +61,9 @@ public abstract class AbstractSkill : MonoBehaviour
         get { return _currentCooltime > 0f; }
     }
     public abstract bool UseSkill();
+    
+    private void OnDisable()
+    {
+        _currentCooltime = 0f;
+    }
 }
