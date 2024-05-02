@@ -14,11 +14,14 @@ public class BaseCharacter : MonoBehaviour
     private AbstractSkill _abstractSkill;
     private AbstractMove _abstractMove;
 
+    private EffectController _effectController = new EffectController();
+
     private Stat _stat;
     private Animator _animator;
     private Rigidbody2D _rigidbody;
 
-    private Transform target;
+    public event Action<BaseCharacter> DeathActionEvent;
+    
     
     private void Awake()
     {
@@ -61,9 +64,13 @@ public class BaseCharacter : MonoBehaviour
         
     }
     //이동 이벤트
-    public void Move()
+    public bool Move()
     {
-        _abstractMove.Move();
+        if (!this.IsAnimationPlaying("walk"))
+        {
+            _animator.Play("walk");
+        }
+        return _abstractMove.Move();
     }
 
     public void Victory()
@@ -88,6 +95,12 @@ public class BaseCharacter : MonoBehaviour
     public void Dead()
     {
         _animator.Play("Death");
+        _abstractMove.ClearTarget();
+    }
+
+    public void AnimationDeadEnd()
+    {
+        gameObject.SetActive(false);
     }
     
     public void Revive()

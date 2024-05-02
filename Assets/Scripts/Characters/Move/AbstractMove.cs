@@ -21,4 +21,9 @@ public abstract class AbstractMove : MonoBehaviour
     {
         return _target != null || _target.gameObject.activeSelf;
     }
+
+    public void ClearTarget()
+    {
+        _target = null;
+    }
 }

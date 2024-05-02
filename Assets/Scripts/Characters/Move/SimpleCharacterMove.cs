@@ -7,7 +7,7 @@ using UnityEngine;
 public class SimpleCharacterMove : AbstractMove
 {
     [SerializeField] 
-    private float _range = 0f;
+    private float _range = 9999f;
     
     public override bool Move()
     {
@@ -18,7 +18,7 @@ public class SimpleCharacterMove : AbstractMove
         }
 
         Vector3 dir = (_target.position - transform.position).normalized;
-        transform.position += dir * Time.deltaTime * _stat.Accelerate;
+        transform.position += Time.deltaTime * _stat.Accelerate * dir;
         
         return true;
     }

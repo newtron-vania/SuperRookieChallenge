@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Stun : IEffect
 {
+    private float _maxDuration = 1f;
     public override Define.EEffectName _effectID
     {
         get { return Define.EEffectName.EEN_Stun; }
@@ -11,7 +12,7 @@ public class Stun : IEffect
 
     public override void SetBuff(Stat stat)
     {
-        duration = 1f;
+        duration = _maxDuration;
         stat.Accelerate = 0f;
     }
 

@@ -64,7 +64,7 @@ public class SimpleCharacterFactory
                 new ActionNode(() => character.UseSkill())
             }),
             new SequenceNode(new List<IBTNode> { // Handle Movement
-                new ConditionNode(() => !character.IsAnimationPlaying("walk"))
+                new ConditionNode(() => character.Move())
             }),
             new SequenceNode(new List<IBTNode>
             {
