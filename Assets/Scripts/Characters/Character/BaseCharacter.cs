@@ -77,12 +77,13 @@ public class BaseCharacter : MonoBehaviour
     
     public void Dead()
     {
-        
+        _animator.Play("Death");
     }
     
     public void Revive()
     {
-        
+        _stat.Hp = _stat.MaxHp;
+        this.gameObject.SetActive(true);
     }
     
     public bool IsDead() => _stat.Hp <= 0;

@@ -6,11 +6,19 @@ using UnityEngine;
 // 이동 방식 정의 추상 인터페이스
 public abstract class AbstractMove : MonoBehaviour
 {
-    private Transform _target;
-    private void Start()
+    protected Transform _target;
+    protected BaseCharacter _character;
+    protected Stat _stat;
+    public void Init(BaseCharacter character, Stat stat)
     {
-        
+        _character = character;
+        _stat = stat;
     }
-    // 다음 이동 좌표 반환 및 이동 성공 여부 확인
+    
     public abstract bool Move();
+
+    protected bool bhasTarget()
+    {
+        return _target != null || _target.gameObject.activeSelf;
+    }
 }

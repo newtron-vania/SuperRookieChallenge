@@ -5,6 +5,9 @@ using UnityEngine;
 
 public abstract class AbstractAttack : MonoBehaviour
 {
+    protected BaseCharacter _character;
+    protected Stat _stat;
+    
     [SerializeField]
     protected int _damage = 1;
     
@@ -23,17 +26,23 @@ public abstract class AbstractAttack : MonoBehaviour
     {
         set { _damage = value; }
     }
-    public abstract bool Attack(Stat stat);
-
-    public abstract bool IsInRange();
-
+    
     public bool bCoolTime
     {
         get { return _currentCooltime > 0f; }
     }
+    
+    public void Init(BaseCharacter character, Stat stat)
+    {
+        _character = character;
+        _stat = stat;
+    }
+    public abstract bool Attack(Stat stat);
+
+    public abstract bool IsInRange();
+
     protected virtual void GiveDamage(Stat stat, BaseCharacter target)
     {
         target.GetComponent<Stat>().Hp -= _damage * stat.Damage;
     }
-
 }

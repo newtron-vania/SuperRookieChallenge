@@ -8,6 +8,14 @@ public class SimpleCharacterMove : AbstractMove
 
     public override bool Move()
     {
+        if (bhasTarget())
+        {
+            _target = null;
+            return false;
+        }
+
+        Vector3 dir = (_target.position - transform.position).normalized;
+        transform.position += dir * Time.deltaTime * _stat.Accelerate;
         
         return true;
     }

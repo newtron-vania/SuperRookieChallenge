@@ -6,17 +6,20 @@ using UnityEngine;
 
 public abstract class AbstractSkill : MonoBehaviour
 {
-    private IEffect _effect;
+    protected BaseCharacter _character;
+    protected Stat _stat;
     
+    private IEffect _effect;
+
     [SerializeField] 
-    protected float _damage;
+    protected float _damage = 0;
     
     [SerializeField]
     private float _range = 0;
 
     [SerializeField] 
     private float _cooltime = 1f;
-
+    
     [ReadOnly] 
     private float _currentCooltime = 0f;
 
@@ -29,6 +32,24 @@ public abstract class AbstractSkill : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_currentCooltime > 0)
+        {
+            _currentCooltime = Mathf.Max(_currentCooltime - Time.deltaTime * _stat.Accelerate, 0);
+        }
+    }
+
+    public void ResetCooltime()
+    {
+        _currentCooltime = _cooltime;
+    }
+    public void Init(BaseCharacter character, Stat stat)
+    {
+        _character = character;
+        _stat = stat;
+    }
+    
     public float Range
     {
         get { return _range; }

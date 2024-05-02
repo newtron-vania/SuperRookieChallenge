@@ -424,11 +424,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lv: 0
-  _hp: 0
-  _maxHp: 0
-  _damage: 0
+  _hp: 100
+  _maxHp: 100
+  _damage: 10
   _attackRange: 0
-  _accelerate: 0
+  _accelerate: 1
 --- !u!50 &3088203210929457034
 Rigidbody2D:
   serializedVersion: 4
@@ -455,7 +455,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &1000013226060160
 GameObject:
   m_ObjectHideFlags: 0
