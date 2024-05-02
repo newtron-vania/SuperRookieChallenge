@@ -35,13 +35,18 @@ public class SimpleAttack : AbstractAttack
     public override bool IsInRange()
     {
         Vector3 myPos = transform.position;
-        targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, SetTargetLayer());
+        targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, 0f, SetTargetLayer());
 
+        Debug.Log($"{gameObject.name}'s attack target count : {targets.Length}");
         if (targets.Length <= 0)
         {
             return false;
         }
 
+        foreach (var VARIABLE in targets)
+        {
+            Debug.Log($"{gameObject.name}'s attack target : {VARIABLE.transform.name}");
+        }
         return true;
     }
 
@@ -56,7 +61,7 @@ public class SimpleAttack : AbstractAttack
 
         // Exclude this GameObject's layer using bitwise operations
         int finalMask = combinedMask & ~(1 << gameObject.layer);
-
+        
         return finalMask;
     }
 }

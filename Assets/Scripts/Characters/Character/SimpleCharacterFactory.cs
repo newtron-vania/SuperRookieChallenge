@@ -18,6 +18,7 @@ public class SimpleCharacterFactory
         if (character == null)
         {
             Debug.Log($"Cannot Find Character {unitName}");
+            return null;
         }
         
         Init(character, _id);
@@ -68,6 +69,7 @@ public class SimpleCharacterFactory
             }),
             new SequenceNode(new List<IBTNode> { // Handle Movement
                 new ConditionNode(() => character.IsOnlyWalkOrIdleAnimationPlaying()),
+                new ConditionNode(() => character.HasMoveTarget()),
                 new ConditionNode(() => character.Move())
             }),
             new SequenceNode(new List<IBTNode>

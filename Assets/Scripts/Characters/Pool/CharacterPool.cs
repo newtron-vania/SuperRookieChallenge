@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterPool : MonoBehaviour
@@ -20,8 +21,8 @@ public class CharacterPool : MonoBehaviour
 
     public void Init()
     {
-        _spawnPoint = GetComponentsInChildren<Transform>(false);
         _factory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Player);
+        _spawnPoint = GetComponentsInChildren<Transform>(false).Where(c => c.gameObject != this.gameObject).ToArray();
     }
 
     private void Awake()
@@ -33,9 +34,15 @@ public class CharacterPool : MonoBehaviour
     {
         for (int i = 0; i < _spawnCharacterName.Length; i++)
         {
-            _characterList.Add(_factory.Create(_spawnCharacterName[i]));
-            _characterReviveTime.Add(0f);
-            _characterList[i].transform.position = _spawnPoint[i].position;
+            BaseCharacter character = _factory.Create(_spawnCharacterName[i]);
+            if (character)
+            {
+                character.DeathActionEvent -= CheckCharacterDeath;
+                character.DeathActionEvent += CheckCharacterDeath;
+                _characterList.Add(character);
+                _characterReviveTime.Add(0f);
+                _characterList[i].transform.position = _spawnPoint[i].position;
+            }
         }
     }
 
@@ -67,17 +74,17 @@ public class CharacterPool : MonoBehaviour
     }
     void Update()
     {
-        for (int i = 0; i < _characterList.Count; i++)
-        {
-            BaseCharacter character = _characterList[i];
-            if (character.IsDead())
-            {
-                _characterReviveTime[i] = Mathf.Max(_characterReviveTime[i] - Time.deltaTime, 0);
-                if (_characterReviveTime[i] <= 0)
-                {
-                    character.Revive();
-                }
-            }
-        }
+        // for (int i = 0; i < _characterList.Count; i++)
+        // {
+        //     BaseCharacter character = _characterList[i];
+        //     if (character.IsDead())
+        //     {
+        //         _characterReviveTime[i] = Mathf.Max(_characterReviveTime[i] - Time.deltaTime, 0);
+        //         if (_characterReviveTime[i] <= 0)
+        //         {
+        //             character.Revive();
+        //         }
+        //     }
+        // }
     }
 }

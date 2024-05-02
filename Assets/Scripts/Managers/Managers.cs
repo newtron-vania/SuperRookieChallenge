@@ -43,8 +43,7 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
             _instance = go.GetComponent<Managers>();
         }
-        
-        Pool.Init();
+        _instance._pool.Init();
     }
 
     private void Update()

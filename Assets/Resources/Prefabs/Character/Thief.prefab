@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010529582648}
   - component: {fileID: 212000010745832340}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: dagger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010976902124}
   - component: {fileID: 212000012044055722}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Front leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011565856400}
   - component: {fileID: 212000012096086302}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013881505214}
   - component: {fileID: 212000011735116538}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010939616090}
   - component: {fileID: 212000012877011298}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: dagger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013941987756}
   - component: {fileID: 212000013066927242}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -520,7 +520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011004582212}
   - component: {fileID: 212000012511457428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Front arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,9 +611,9 @@ GameObject:
   - component: {fileID: 4297804498557017015}
   - component: {fileID: 4659933104270707958}
   - component: {fileID: 8643456919696954491}
-  - component: {fileID: -6486327828448217997}
   - component: {fileID: 7956260720333949359}
-  m_Layer: 0
+  - component: {fileID: -3191788406687509588}
+  m_Layer: 8
   m_Name: Thief
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +703,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -744,10 +744,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.000000014901161, y: 0.8925244}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -758,7 +758,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.38273624, y: 1.6840059}
   m_EdgeRadius: 0
 --- !u!114 &4659933104270707958
 MonoBehaviour:
@@ -788,19 +788,6 @@ MonoBehaviour:
   _damage: 1
   _range: 1
   _cooltime: 1
---- !u!114 &-6486327828448217997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000012663239756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c671e41501f414f28b635fcbb3fc663c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isUsing: 0
 --- !u!114 &7956260720333949359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,6 +803,18 @@ MonoBehaviour:
   _damage: 1
   _range: 2
   _cooltime: 3
+--- !u!114 &-3191788406687509588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012663239756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81be22bc8d694526a6b7df7a7bda1394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1000012730742446
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010598987170}
   - component: {fileID: 212000014126468704}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -910,7 +909,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013297336500}
   - component: {fileID: 212000010614513294}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -246,7 +246,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1205961456
+--- !u!1001 &2095903169
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -254,9 +254,74 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2360130193303198885, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2777066210981816183, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_Name
+      value: MonsterSpawningPool
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+--- !u!1001 &2104729308
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 269862240028506416, guid: 4a0ba11e4cfbf4b5dbc6448dd1cc174b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2808895499325264435, guid: 4a0ba11e4cfbf4b5dbc6448dd1cc174b, type: 3}
       propertyPath: m_Name
       value: PlayerSpawningPool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2936155245542459443, guid: 4a0ba11e4cfbf4b5dbc6448dd1cc174b, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5060520331120600136, guid: 4a0ba11e4cfbf4b5dbc6448dd1cc174b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -298,6 +363,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6390864315628614086, guid: 4a0ba11e4cfbf4b5dbc6448dd1cc174b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754965643688581393, guid: 4a0ba11e4cfbf4b5dbc6448dd1cc174b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -309,4 +382,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1176207697}
-  - {fileID: 1205961456}
+  - {fileID: 2104729308}
+  - {fileID: 2095903169}

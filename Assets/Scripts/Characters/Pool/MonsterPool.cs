@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 
@@ -34,7 +35,7 @@ public class MonsterPool : MonoBehaviour
     {
         _monsterFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Enemy);
         _bossFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Boss);
-        _spawnPoint = GetComponentsInChildren<Transform>(false);
+        _spawnPoint = GetComponentsInChildren<Transform>(false).Where(c => c.gameObject != this.gameObject).ToArray();;
     }
     private void Start()
     {

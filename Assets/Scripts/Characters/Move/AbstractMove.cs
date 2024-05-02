@@ -6,7 +6,7 @@ using UnityEngine;
 // 이동 방식 정의 추상 인터페이스
 public abstract class AbstractMove : MonoBehaviour
 {
-    protected Transform _target;
+    protected Transform _target = null;
     protected BaseCharacter _character;
     protected Stat _stat;
     public void Init(BaseCharacter character, Stat stat)
@@ -17,9 +17,9 @@ public abstract class AbstractMove : MonoBehaviour
     
     public abstract bool Move();
 
-    protected bool bhasTarget()
+    public bool bhasTarget()
     {
-        return _target != null || _target.gameObject.activeSelf;
+        return _target != null && _target.gameObject.activeSelf;
     }
 
     public void ClearTarget()

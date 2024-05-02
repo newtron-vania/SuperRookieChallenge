@@ -23,15 +23,6 @@ public abstract class AbstractSkill : MonoBehaviour
     [ReadOnly] 
     private float _currentCooltime = 0f;
 
-    private void Awake()
-    {
-        IEffect[] effects = GetComponentsInChildren<IEffect>();
-        foreach (IEffect effect in effects)
-        {
-            _effect.ApplyEffect(effect);
-        }
-    }
-
     private void Update()
     {
         if (_currentCooltime > 0)
@@ -48,6 +39,17 @@ public abstract class AbstractSkill : MonoBehaviour
     {
         _character = character;
         _stat = stat;
+        IEffect[] effects = GetComponentsInChildren<IEffect>();
+
+        foreach (var VARIABLE in effects)
+        {
+            if (_effect == null)
+            {
+                _effect = VARIABLE;
+                continue;
+            }
+            _effect.ApplyEffect(VARIABLE);
+        }
     }
     
     public float Range

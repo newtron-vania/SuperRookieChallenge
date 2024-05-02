@@ -9,8 +9,8 @@ public class SimpleHealSkill : AbstractSkill
     public override bool IsInRange()
     {
         Vector3 myPos = transform.position;
-        targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, SetTargetLayer());
-
+        targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, 0f, SetTargetLayer());
+        
         if (targets.Length <= 0)
         {
             return false;
@@ -49,6 +49,7 @@ public class SimpleHealSkill : AbstractSkill
 
         BaseCharacter target = targets[0].transform.GetComponent<BaseCharacter>();
         
+        Debug.Log($"Heal Target : {target.name}, _stat : {_stat == null}");
         target.Hurt(-1 * _damage * _stat.Damage);
         target.SetBuff(_effect);
         

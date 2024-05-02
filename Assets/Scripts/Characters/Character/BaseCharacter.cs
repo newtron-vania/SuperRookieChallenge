@@ -27,11 +27,12 @@ public class BaseCharacter : MonoBehaviour
     private void Awake()
     {
         _effectController = GetComponent<EffectController>();
-        InitStrategy();
         _stat = GetComponent<Stat>();
 
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>(true);
         _rigidbody = GetComponent<Rigidbody2D>();
+        
+        InitStrategy();
     }
 
     private void InitStrategy()
@@ -116,6 +117,10 @@ public class BaseCharacter : MonoBehaviour
     // 버프 및 디버프 처리
     public void SetBuff(IEffect effect)
     {
+        if (effect == null)
+        {
+            return;
+        }
         _effectController.Add(effect);
     }
 
@@ -130,10 +135,13 @@ public class BaseCharacter : MonoBehaviour
     public bool IsSkillCooldown() => _abstractSkill ? _abstractSkill.bCoolTime : false;
     public bool IsAttackRange() => _abstractAttack ? _abstractAttack.IsInRange() : false;
     public bool IsSkillRange() => _abstractSkill ? _abstractSkill.IsInRange() : false;
+    public bool HasMoveTarget() => _abstractMove ? _abstractMove.bhasTarget() : false;
     public bool IsOnlyWalkOrIdleAnimationPlaying()
     {
         var currentAnimation = _animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
         return currentAnimation == Animator.StringToHash("walk") || currentAnimation == Animator.StringToHash("idle");
     }
+
+   
 
 }

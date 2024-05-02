@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AnimationTest : MonoBehaviour
 {
+    [SerializeField] private GameObject go;
     private Animator _animator;
     void Awake()
     {
@@ -13,6 +14,6 @@ public class AnimationTest : MonoBehaviour
 
     private void Start()
     {
-        _animator.Play("attack");
+        Managers.Resource.Instantiate("Archer");
     }
 }

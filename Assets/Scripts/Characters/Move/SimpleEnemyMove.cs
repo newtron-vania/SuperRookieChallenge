@@ -17,22 +17,22 @@ public class SimpleEnemyMove : AbstractMove
             return false;
         }
         
-        if ((_target.position - transform.position).magnitude < 0.1f)
+        if ((_target.position - _character.transform.position).magnitude < 0.1f)
         {
-            Debug.Log($"Too Near with target : {(_target.position - transform.position).magnitude}");
+            Debug.Log($"Too Near with target : {(_target.position - _character.transform.position).magnitude}");
             return false;
         }
 
-        Vector3 dir = (_target.position - transform.position).normalized;
-        transform.position += Time.deltaTime * _stat.Accelerate * dir;
+        Vector3 dir = (_target.position - _character.transform.position).normalized;
+        _character.transform.position += Time.deltaTime * _stat.Accelerate * dir;
         
         return true;
     }
     
     private void FindTarget()
     {
-        Vector3 myPos = transform.position;
-        RaycastHit2D[] targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, SetTargetLayer());
+        Vector3 myPos = _character.transform.position;
+        RaycastHit2D[] targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, 0f, SetTargetLayer());
 
         if (targets.Length <= 0)
         {
