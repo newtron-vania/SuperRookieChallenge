@@ -6,6 +6,8 @@ public class JPS : AbstractPathFind
 {
     private PriorityQueue<Node> openList;
     private HashSet<Vector3> closedSet;
+
+    private Vector3 start;
     
     public JPS(float maxDistance, float stepDistance) : base(maxDistance, stepDistance)
     {
@@ -13,6 +15,7 @@ public class JPS : AbstractPathFind
 
     public override List<Vector3> FindPath(Vector3 start, Vector3 target)
     {
+        this.start = start;
         List<Vector3> path = new List<Vector3>();
         // 시작점과 목표점 사이의 거리가 _maxDistance보다 크면 빈 경로를 반환
         if (Vector3.Distance(start, target) > _maxDistance)
@@ -29,11 +32,15 @@ public class JPS : AbstractPathFind
 
         while (openList.Count > 0)
         {
+            if (openList.Count > 1000)
+            {
+                return path;
+            }
             Node currentNode = openList.Dequeue();
 
             closedSet.Add(currentNode.Position);
 
-            if (currentNode.Position == target)
+            if ((currentNode.Position - target).sqrMagnitude <= _stepDistance * _stepDistance)
             {
                 return RetracePath(startNode, currentNode);
             }
@@ -88,40 +95,38 @@ public class JPS : AbstractPathFind
     // 다음 점프 포인트를 찾거나 null을 반환
     private Node GetJumpPoint(Node currentNode, Vector3 direction, Vector3 goal)
     {
-        while (true)
+        Vector3 nextPosition = currentNode.Position + direction * _stepDistance;
+        Node nextNode = new Node(nextPosition, currentNode.GCost + _stepDistance, Vector3.Distance(nextPosition, goal), currentNode);
+
+        if (!IsValidPosition(currentNode.Position, nextPosition))
         {
-            Vector3 nextPosition = currentNode.Position + direction * _stepDistance;
-            if (!IsValidPosition(currentNode.Position, nextPosition) || closedSet.Contains(nextPosition))
-            {
-                return null;
-            }
-
-            Node nextNode = new Node(nextPosition, currentNode.GCost + _stepDistance, Vector3.Distance(nextPosition, goal), currentNode);
-
-            if (nextPosition == goal)
-            {
-                return nextNode;
-            }
-
-            if (HasForcedNeighbor(currentNode, direction))
-            {
-                return nextNode;
-            }
-
-            if (direction.x != 0 && direction.y != 0)
-            {
-                Node horizontalJumpPoint = GetJumpPoint(nextNode, new Vector3(direction.x, 0), goal);
-                Node verticalJumpPoint = GetJumpPoint(nextNode, new Vector3(0, direction.y), goal);
-
-                if (horizontalJumpPoint != null || verticalJumpPoint != null)
-                {
-                    return nextNode;
-                }
-            }
-
-            currentNode = nextNode;  // 다음 노드로 업데이트하여 반복
+            return null;
         }
+
+        if ((nextPosition - goal).sqrMagnitude <= _stepDistance * _stepDistance)
+        {
+            return nextNode;
+        }
+
+        if (HasForcedNeighbor(currentNode, direction))
+        {
+            return nextNode;
+        }
+
+        if (direction.x != 0 && direction.y != 0)
+        {
+            Node horizontalJumpPoint = GetJumpPoint(nextNode, new Vector3(direction.x, 0), goal);
+            Node verticalJumpPoint = GetJumpPoint(nextNode, new Vector3(0, direction.y), goal);
+
+            if (horizontalJumpPoint != null || verticalJumpPoint != null)
+            {
+                return nextNode;
+            }
+        }
+
+        return GetJumpPoint(nextNode, direction, goal);
     }
+
 
     
     // 강제 이웃을 확인하는 함수
@@ -154,9 +159,12 @@ public class JPS : AbstractPathFind
     }
 
     // 지정된 위치가 유효한지 확인
-    private bool IsValidPosition(Vector2 position, Vector2 target)
+    private bool IsValidPosition(Vector3 position, Vector3 target)
     {
-        
+        if ((this.start - target).magnitude > _maxDistance)
+        {
+            return false;
+        }
         Vector2 direction = target - position;
 
         RaycastHit2D hit = Physics2D.Raycast(position, direction, _stepDistance);
