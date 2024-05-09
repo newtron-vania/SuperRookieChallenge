@@ -18,7 +18,7 @@ public abstract class AbstractAttack : MonoBehaviour
     [SerializeField] 
     private float _cooltime = 1.5f;
 
-    [ReadOnly] 
+    [SerializeField, ReadOnly] 
     private float _currentCooltime = 0f;
 
     private List<BaseCharacter> targets;
@@ -26,6 +26,11 @@ public abstract class AbstractAttack : MonoBehaviour
     public int Damage
     {
         set { _damage = value; }
+    }
+
+    public void ResetCooltime()
+    {
+        _currentCooltime = _cooltime;
     }
     
     public bool bCoolTime
@@ -38,6 +43,15 @@ public abstract class AbstractAttack : MonoBehaviour
         _character = character;
         _stat = stat;
     }
+    
+    private void Update()
+    {
+        if (_currentCooltime > 0)
+        {
+            _currentCooltime = Mathf.Max(_currentCooltime - Time.deltaTime * _stat.Accelerate, 0);
+        }
+    }
+    
     public abstract bool Attack();
 
     public abstract bool IsInRange();

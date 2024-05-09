@@ -126,11 +126,23 @@ public class BaseCharacter : MonoBehaviour
 
     private void PlayAnimation(string name)
     {
+        Debug.Log($"{name} Animation Play!");
         _animator.Play(name, -1, 0f);
     }
     
     public bool IsDead() => _stat.Hp <= 0;
-    public bool IsAnimationPlaying(string animName) => _animator.GetCurrentAnimatorStateInfo(0).IsName(animName);
+
+    public bool IsAnimationPlaying(string animName)
+    {
+        var animInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        if (animInfo.IsName(animName) && animInfo.normalizedTime >= 0 && animInfo.normalizedTime < 1f)
+        {
+            Debug.Log($"is Playing {animName}");
+            return true;
+        }
+        Debug.Log($"is not Playing {animName}");
+        return false;
+    }
     public bool IsAttackCooldown() => _abstractAttack ? _abstractAttack.bCoolTime : false;
     public bool IsSkillCooldown() => _abstractSkill ? _abstractSkill.bCoolTime : false;
     public bool IsAttackRange() => _abstractAttack ? _abstractAttack.IsInRange() : false;
@@ -138,10 +150,7 @@ public class BaseCharacter : MonoBehaviour
     public bool HasMoveTarget() => _abstractMove ? _abstractMove.bhasTarget() : false;
     public bool IsOnlyWalkOrIdleAnimationPlaying()
     {
-        var currentAnimation = _animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
-        return currentAnimation == Animator.StringToHash("walk") || currentAnimation == Animator.StringToHash("idle");
+        var animInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        return animInfo.IsName("walk") || animInfo.IsName("idle") || animInfo.normalizedTime >= 1f;
     }
-
-   
-
 }

@@ -69,11 +69,12 @@ public class SimpleCharacterFactory
             }),
             new SequenceNode(new List<IBTNode> { // Handle Movement
                 new ConditionNode(() => character.IsOnlyWalkOrIdleAnimationPlaying()),
-                new ConditionNode(() => character.HasMoveTarget()),
+                new ConditionNode(() => !character.IsAttackRange()),
                 new ConditionNode(() => character.Move())
             }),
             new SequenceNode(new List<IBTNode>
             {
+                new ConditionNode(() => character.IsOnlyWalkOrIdleAnimationPlaying()),
                 new ConditionNode(() => !character.IsAnimationPlaying("idle")),
                 new ActionNode(() => character.Idle())
             })
@@ -102,10 +103,13 @@ public class SimpleCharacterFactory
                 new ActionNode(() => character.UseSkill())
             }),
             new SequenceNode(new List<IBTNode> { // Handle Movement
+                new ConditionNode(() => character.IsOnlyWalkOrIdleAnimationPlaying()),
+                new ConditionNode(() => !character.IsAttackRange()),
                 new ConditionNode(() => character.Move())
             }),
             new SequenceNode(new List<IBTNode>
             {
+                new ConditionNode(() => character.IsOnlyWalkOrIdleAnimationPlaying()),
                 new ConditionNode(() => !character.IsAnimationPlaying("idle")),
                 new ActionNode(() => character.Idle())
             })

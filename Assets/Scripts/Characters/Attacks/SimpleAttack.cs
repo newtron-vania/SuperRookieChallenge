@@ -28,6 +28,8 @@ public class SimpleAttack : AbstractAttack
         {
             _character.transform.localScale = new Vector3(1 * Mathf.Abs(scale.x), scale.y, scale.z);
         }
+        
+        ResetCooltime();
 
         return true;
     }

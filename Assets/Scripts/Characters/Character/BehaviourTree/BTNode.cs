@@ -21,7 +21,7 @@ public class ConditionNode : IBTNode {
     }
 
     public IBTNode.ENodeState Evaluate() {
-        return _condition() ? IBTNode.ENodeState.ENS_Success : IBTNode.ENodeState.ENS_Failure;
+        return _condition.Invoke() ? IBTNode.ENodeState.ENS_Success : IBTNode.ENodeState.ENS_Failure;
     }
 }
 

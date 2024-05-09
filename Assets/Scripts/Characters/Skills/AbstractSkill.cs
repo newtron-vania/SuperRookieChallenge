@@ -20,7 +20,7 @@ public abstract class AbstractSkill : MonoBehaviour
     [SerializeField] 
     private float _cooltime = 1f;
     
-    [ReadOnly] 
+    [SerializeField, ReadOnly] 
     private float _currentCooltime = 0f;
 
     private void Update()
