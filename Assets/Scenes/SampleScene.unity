@@ -298,6 +298,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MonsterSpawningPool
       objectReference: {fileID: 0}
+    - target: {fileID: 2777066210981816183, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432631603079990283, guid: c60075e81bdf14801b34ab77c8c466c4, type: 3}
+      propertyPath: _killCount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

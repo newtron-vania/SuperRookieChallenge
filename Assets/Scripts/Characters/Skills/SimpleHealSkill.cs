@@ -15,6 +15,17 @@ public class SimpleHealSkill : AbstractSkill
         {
             return false;
         }
+        
+        int deadCount = 0;
+        foreach (var target in targets)
+        {
+            deadCount += target.transform.GetComponent<BaseCharacter>().IsDead() ? 1 : 0;
+        }
+
+        if (targets.Length == deadCount)
+        {
+            return false;
+        }
 
         return true;
     }

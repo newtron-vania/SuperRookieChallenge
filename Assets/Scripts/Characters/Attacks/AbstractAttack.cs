@@ -10,6 +10,9 @@ public abstract class AbstractAttack : MonoBehaviour
     protected Stat _stat;
     
     [SerializeField]
+    protected IEffect _effect;
+    
+    [SerializeField]
     protected int _damage = 1;
     
     [SerializeField]
@@ -42,6 +45,23 @@ public abstract class AbstractAttack : MonoBehaviour
     {
         _character = character;
         _stat = stat;
+        
+        List<IEffectScriptableObj> effects = GetComponent<EffectStorage>()?._attackEffect;
+
+        if (effects == null)
+        {
+            return;
+        }
+        
+        foreach (var VARIABLE in effects)
+        {
+            if (_effect == null)
+            {
+                _effect = VARIABLE.GetEffect();
+                continue;
+            }
+            _effect.ApplyEffect(VARIABLE.GetEffect());
+        }
     }
     
     private void Update()

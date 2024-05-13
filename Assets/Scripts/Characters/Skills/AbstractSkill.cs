@@ -39,16 +39,21 @@ public abstract class AbstractSkill : MonoBehaviour
     {
         _character = character;
         _stat = stat;
-        IEffect[] effects = GetComponentsInChildren<IEffect>();
+        List<IEffectScriptableObj> effects = GetComponent<EffectStorage>()?._skillEffect;
 
+        if (effects == null)
+        {
+            return;
+        }
+        
         foreach (var VARIABLE in effects)
         {
             if (_effect == null)
             {
-                _effect = VARIABLE;
+                _effect = VARIABLE.GetEffect();
                 continue;
             }
-            _effect.ApplyEffect(VARIABLE);
+            _effect.ApplyEffect(VARIABLE.GetEffect());
         }
     }
     

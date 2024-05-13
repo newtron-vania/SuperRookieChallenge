@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5158762939998574864}
   - component: {fileID: 1638563267562234245}
   - component: {fileID: 4196301282092746630}
+  - component: {fileID: 7960621233411775954}
   m_Layer: 9
   m_Name: Monster
   m_TagString: Untagged
@@ -95,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 5085405977604965779}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4f230fa6acf87ff4aa55a06a9691101d, type: 2}
+  m_Controller: {fileID: 9100000, guid: e6cd28e75ec294e47afda81db9c438de, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -106,6 +107,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7960621233411775954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5085405977604965779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02cda803e1853408cb0fd4007c754682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: -7161928480732486389}
 --- !u!1 &7988545859562375077
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +232,7 @@ MonoBehaviour:
   _damage: 1
   _range: 1
   _cooltime: 1
+  _currentCooltime: 0
 --- !u!114 &-4721526039247083654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,7 +290,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.093316555, y: 0.55212283}
+  m_Offset: {x: 0, y: 0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -286,5 +301,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5023118, y: 0.9533417}
+  m_Size: {x: 0.4, y: 0.2}
   m_EdgeRadius: 0

@@ -67,13 +67,17 @@ public class BaseCharacter : MonoBehaviour
         _abstractSkill?.UseSkill();
     }
     //이동 이벤트
-    public bool Move()
+    public bool HasMoveTarget()
     {
-        if (!this.IsAnimationPlaying("walk"))
+        return _abstractMove.Move();
+    }
+
+    public void Move()
+    {
+        if (!IsAnimationPlaying("walk"))
         {
             PlayAnimation("walk");
         }
-        return _abstractMove.Move();
     }
 
     public void Victory()
@@ -97,14 +101,14 @@ public class BaseCharacter : MonoBehaviour
     
     public void Dead()
     {
-        PlayAnimation("death");
+        PlayAnimation("die");
         _abstractMove.ClearTarget();
         _effectController.Clear();
-        DeathActionEvent?.Invoke(this);
     }
 
     public void AnimationDeadEnd()
     {
+        DeathActionEvent?.Invoke(this);
         gameObject.SetActive(false);
     }
     
@@ -126,7 +130,6 @@ public class BaseCharacter : MonoBehaviour
 
     private void PlayAnimation(string name)
     {
-        Debug.Log($"{name} Animation Play!");
         _animator.Play(name, -1, 0f);
     }
     
@@ -137,17 +140,15 @@ public class BaseCharacter : MonoBehaviour
         var animInfo = _animator.GetCurrentAnimatorStateInfo(0);
         if (animInfo.IsName(animName) && animInfo.normalizedTime >= 0 && animInfo.normalizedTime < 1f)
         {
-            Debug.Log($"is Playing {animName}");
             return true;
         }
-        Debug.Log($"is not Playing {animName}");
         return false;
     }
+    
     public bool IsAttackCooldown() => _abstractAttack ? _abstractAttack.bCoolTime : false;
     public bool IsSkillCooldown() => _abstractSkill ? _abstractSkill.bCoolTime : false;
     public bool IsAttackRange() => _abstractAttack ? _abstractAttack.IsInRange() : false;
     public bool IsSkillRange() => _abstractSkill ? _abstractSkill.IsInRange() : false;
-    public bool HasMoveTarget() => _abstractMove ? _abstractMove.bhasTarget() : false;
     public bool IsOnlyWalkOrIdleAnimationPlaying()
     {
         var animInfo = _animator.GetCurrentAnimatorStateInfo(0);

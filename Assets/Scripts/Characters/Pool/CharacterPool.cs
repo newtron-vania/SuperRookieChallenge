@@ -69,22 +69,24 @@ public class CharacterPool : MonoBehaviour
             Debug.Log("Character not found in the list.");
             return;
         }
+        
+        if(GameOver()) Managers.Game.EndGame();
 
         _characterReviveTime[index] = _spawnTime;
     }
     void Update()
     {
-        // for (int i = 0; i < _characterList.Count; i++)
-        // {
-        //     BaseCharacter character = _characterList[i];
-        //     if (character.IsDead())
-        //     {
-        //         _characterReviveTime[i] = Mathf.Max(_characterReviveTime[i] - Time.deltaTime, 0);
-        //         if (_characterReviveTime[i] <= 0)
-        //         {
-        //             character.Revive();
-        //         }
-        //     }
-        // }
+        for (int i = 0; i < _characterList.Count; i++)
+        {
+            BaseCharacter character = _characterList[i];
+            if (character.IsDead())
+            {
+                _characterReviveTime[i] = Mathf.Max(_characterReviveTime[i] - Time.deltaTime, 0);
+                if (_characterReviveTime[i] <= 0)
+                {
+                    character.Revive();
+                }
+            }
+        }
     }
 }

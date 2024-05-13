@@ -15,15 +15,15 @@ public class Managers : MonoBehaviour
     private ResourceManager _resource = new ResourceManager();
     private SceneManagerEx _scene = new SceneManagerEx();
     private PoolManager _pool = new PoolManager();
+    private GameManager _game = new GameManager();
 
 
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static PoolManager Pool{ get{ return Instance._pool; } }
+    public static GameManager Game{ get{ return Instance._game; } }
 
     #endregion
-
-    public static float GameTime { get; set; } = 0;
 
     void Awake()
     {
@@ -46,10 +46,6 @@ public class Managers : MonoBehaviour
         _instance._pool.Init();
     }
 
-    private void Update()
-    {
-        GameTime += Time.deltaTime;
-    }
 
     public static void Clear()
     {

@@ -53,7 +53,11 @@ public class SimpleCharacterFactory
         var rootNode = new SelectorNode(new List<IBTNode> {
             new SequenceNode(new List<IBTNode> { // Check Death
                 new ConditionNode(() => character.IsDead()),
+                new ConditionNode(() => !character.IsAnimationPlaying("die")),
                 new ActionNode(() => character.Dead())
+            }),
+            new SelectorNode(new List<IBTNode> { // Check Death
+                new ConditionNode(() => character.IsDead())
             }),
             new SequenceNode(new List<IBTNode> { // Handle Attack
                 new ConditionNode(() => !character.IsAnimationPlaying("attack")),
@@ -70,7 +74,8 @@ public class SimpleCharacterFactory
             new SequenceNode(new List<IBTNode> { // Handle Movement
                 new ConditionNode(() => character.IsOnlyWalkOrIdleAnimationPlaying()),
                 new ConditionNode(() => !character.IsAttackRange()),
-                new ConditionNode(() => character.Move())
+                new ConditionNode(() => character.HasMoveTarget()),
+                new ActionNode(() => character.Move())
             }),
             new SequenceNode(new List<IBTNode>
             {
@@ -88,7 +93,11 @@ public class SimpleCharacterFactory
         var rootNode = new SelectorNode(new List<IBTNode> {
             new SequenceNode(new List<IBTNode> { // Check Death
                 new ConditionNode(() => character.IsDead()),
+                new ConditionNode(() => !character.IsAnimationPlaying("die")),
                 new ActionNode(() => character.Dead())
+            }),
+            new SelectorNode(new List<IBTNode> { // Check Death
+                new ConditionNode(() => character.IsDead())
             }),
             new SequenceNode(new List<IBTNode> { // Handle Attack
                 new ConditionNode(() => !character.IsAnimationPlaying("attack")),
@@ -105,7 +114,8 @@ public class SimpleCharacterFactory
             new SequenceNode(new List<IBTNode> { // Handle Movement
                 new ConditionNode(() => character.IsOnlyWalkOrIdleAnimationPlaying()),
                 new ConditionNode(() => !character.IsAttackRange()),
-                new ConditionNode(() => character.Move())
+                new ConditionNode(() => character.HasMoveTarget()),
+                new ActionNode(() => character.Move())
             }),
             new SequenceNode(new List<IBTNode>
             {

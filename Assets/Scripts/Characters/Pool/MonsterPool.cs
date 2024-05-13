@@ -22,7 +22,7 @@ public class MonsterPool : MonoBehaviour
     
     HashSet<BaseCharacter> _spawnUnit = new HashSet<BaseCharacter>();
     
-    [ReadOnly]
+    [SerializeField]
     private int _killCount = 0;
 
     [SerializeField] 
@@ -35,7 +35,7 @@ public class MonsterPool : MonoBehaviour
     {
         _monsterFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Enemy);
         _bossFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Boss);
-        _spawnPoint = GetComponentsInChildren<Transform>(false).Where(c => c.gameObject != this.gameObject).ToArray();;
+        _spawnPoint = GetComponentsInChildren<Transform>(false).Where(c => c.gameObject != this.gameObject).ToArray();
     }
     private void Start()
     {

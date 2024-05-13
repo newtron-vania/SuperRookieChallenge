@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: -8019682003819185059}
   - component: {fileID: 5890930598114853908}
   - component: {fileID: -2787935805695268289}
-  - component: {fileID: 6597866156286680359}
   - component: {fileID: 3269805833811230714}
   - component: {fileID: -668574319587082731}
+  - component: {fileID: 6180821248737775513}
   m_Layer: 8
   m_Name: Knight
   m_TagString: Untagged
@@ -153,7 +153,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015315205, y: 0.8545871}
+  m_Offset: {x: 0, y: 0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -164,7 +164,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.47928375, y: 1.7044983}
+  m_Size: {x: 0.4, y: 0.2}
   m_EdgeRadius: 0
 --- !u!114 &5890930598114853908
 MonoBehaviour:
@@ -194,18 +194,7 @@ MonoBehaviour:
   _damage: 1
   _range: 1
   _cooltime: 1.5
---- !u!114 &6597866156286680359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010755293042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2397d364a3d1c47d980b1987c3664ea2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _currentCooltime: 0
 --- !u!114 &3269805833811230714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +210,7 @@ MonoBehaviour:
   _damage: 1
   _range: 1
   _cooltime: 3
+  _currentCooltime: 0
 --- !u!114 &-668574319587082731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +223,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be22bc8d694526a6b7df7a7bda1394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectList: 
+--- !u!114 &6180821248737775513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010755293042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a330e6174f4f445b08360c06525deebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackEffect: []
+  _skillEffect:
+  - {fileID: 11400000, guid: 278ff1792d2b54fe789ff2c1b478d71f, type: 2}
 --- !u!1 &1000011164445256
 GameObject:
   m_ObjectHideFlags: 0

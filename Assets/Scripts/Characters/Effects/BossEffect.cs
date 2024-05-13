@@ -9,6 +9,7 @@ public class BossEffect : IEffect
     
     private float _hpUp = 2f;
     private float _damageUp = 1.5f;
+    private float _sizeUp = 1.5f;
     public override Define.EEffectName _effectID
     {
         get { return Define.EEffectName.EEN_Boss; }
@@ -20,6 +21,7 @@ public class BossEffect : IEffect
         stat.MaxHp *= _hpUp;
         stat.Hp = stat.MaxHp;
         stat.Damage *= _damageUp;
+        stat.transform.localScale *= _sizeUp;
     }
 
     public override void RemoveBuff(Stat stat)
@@ -28,5 +30,6 @@ public class BossEffect : IEffect
         stat.MaxHp /= _hpUp;
         stat.Hp = Mathf.Min(stat.MaxHp, 0f);
         stat.Damage /= _damageUp;
+        stat.transform.localScale /= _sizeUp;
     }
 }

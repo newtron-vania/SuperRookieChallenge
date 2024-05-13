@@ -18,6 +18,7 @@ public class SimpleAttack : AbstractAttack
         BaseCharacter target = targets[0].transform.GetComponent<BaseCharacter>();
         
         target.Hurt(_damage * _stat.Damage);
+        target.SetBuff(_effect);
         
         Vector3 scale = _character.transform.localScale;
         if (_character.transform.position.x < target.transform.position.x)
@@ -39,15 +40,20 @@ public class SimpleAttack : AbstractAttack
         Vector3 myPos = transform.position;
         targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, 0f, SetTargetLayer());
 
-        Debug.Log($"{gameObject.name}'s attack target count : {targets.Length}");
         if (targets.Length <= 0)
         {
             return false;
         }
 
-        foreach (var VARIABLE in targets)
+        int deadCount = 0;
+        foreach (var target in targets)
         {
-            Debug.Log($"{gameObject.name}'s attack target : {VARIABLE.transform.name}");
+            deadCount += target.transform.GetComponent<BaseCharacter>().IsDead() ? 1 : 0;
+        }
+
+        if (targets.Length == deadCount)
+        {
+            return false;
         }
         return true;
     }

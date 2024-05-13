@@ -19,7 +19,6 @@ public class SimpleCharacterMove : AbstractMove
 
         if ((_target.position - transform.position).magnitude < 0.1f)
         {
-            Debug.Log($"Too Near with target : {(_target.position - transform.position).magnitude}");
             return false;
         }
         

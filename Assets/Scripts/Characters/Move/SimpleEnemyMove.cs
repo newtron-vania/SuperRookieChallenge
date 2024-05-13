@@ -19,12 +19,21 @@ public class SimpleEnemyMove : AbstractMove
         
         if ((_target.position - _character.transform.position).magnitude < 0.1f)
         {
-            Debug.Log($"Too Near with target : {(_target.position - _character.transform.position).magnitude}");
             return false;
         }
 
         Vector3 dir = (_target.position - _character.transform.position).normalized;
         _character.transform.position += Time.deltaTime * _stat.Accelerate * dir;
+
+        Vector3 scale = _character.transform.localScale;
+        if (_character.transform.position.x < _target.transform.position.x)
+        {
+            _character.transform.localScale = new Vector3(-1 * Mathf.Abs(scale.x), scale.y, scale.z);
+        }
+        else
+        {
+            _character.transform.localScale = new Vector3(1 * Mathf.Abs(scale.x), scale.y, scale.z);
+        }
         
         return true;
     }

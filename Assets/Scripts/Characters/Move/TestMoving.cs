@@ -38,7 +38,7 @@ public class TestMoving : MonoBehaviour
             new SequenceNode(new List<IBTNode> { // Handle Movement
                 new ConditionNode(() => character.IsOnlyWalkOrIdleAnimationPlaying()),
                 new ConditionNode(() => !character.IsAttackRange()),
-                new ConditionNode(() => character.Move())
+                new ConditionNode(() => character.HasMoveTarget())
             }),
             new SequenceNode(new List<IBTNode>
             {

@@ -5,14 +5,21 @@ using UnityEngine;
 
 
 
-public abstract class IEffect : MonoBehaviour
+public abstract class IEffect
 {
     public abstract Define.EEffectName _effectID { get; }
 
     // 다음 효과
     private IEffect _effect;
+    // 버프 최대 지속시간
+    protected float _maxDuration = 1f;
     // 버프 지속시간
     protected float _duration = 0f;
+    
+    public float MaxDuration
+    {
+        set { _maxDuration = value; }
+    }
     
     public bool bEnd()
     {
