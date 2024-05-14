@@ -9,6 +9,8 @@ public class HPBar : UI_Base
     private BaseCharacter _character;
     private Stat _stat;
     [SerializeField] private float _visibleTime = 1f;
+
+    private Slider _slider;
     enum GameObjects
     {
         HPBar,
@@ -22,6 +24,7 @@ public class HPBar : UI_Base
     {
         _character = transform.parent.GetComponent<BaseCharacter>();
         _stat = transform.parent.GetComponent<Stat>();
+        _slider = GetObject((int)GameObjects.HPBar).GetComponent<Slider>();
         _character.HurtEvent -= UpdateHpBar;
         _character.HurtEvent += UpdateHpBar;
     }
@@ -49,7 +52,7 @@ public class HPBar : UI_Base
             ratio = 0;
         if (ratio > 1)
             ratio = 1;
-        GetObject((int)GameObjects.HPBar).GetComponent<Slider>().value = ratio;
+        _slider.value = ratio;
     }
 
     IEnumerator OnGameObjectVisible()
