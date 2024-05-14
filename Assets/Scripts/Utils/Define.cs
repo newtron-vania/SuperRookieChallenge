@@ -20,6 +20,23 @@ public class Define
         EEN_Burned,
         EEN_Boss,
     }
+    
+    public enum PopupUIGroup
+    {
+        Unknown,
+    }
+
+    public enum SceneUI
+    {
+        Unknown,
+    }
+    
+    public enum UIEvent
+    {
+        Click,
+        Drag,
+
+    }
 
     public enum SceneType
     {
