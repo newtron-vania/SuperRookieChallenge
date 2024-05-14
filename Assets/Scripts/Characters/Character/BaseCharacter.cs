@@ -18,6 +18,7 @@ public class BaseCharacter : MonoBehaviour
     private EffectController _effectController;
 
     private Stat _stat;
+    private HPBar _hpBar;
     private Animator _animator;
     private Rigidbody2D _rigidbody;
 
@@ -28,7 +29,7 @@ public class BaseCharacter : MonoBehaviour
     {
         _effectController = GetComponent<EffectController>();
         _stat = GetComponent<Stat>();
-
+        _hpBar = gameObject.FindChild<HPBar>(null,true);
         _animator = GetComponentInChildren<Animator>(true);
         _rigidbody = GetComponent<Rigidbody2D>();
         
@@ -88,6 +89,7 @@ public class BaseCharacter : MonoBehaviour
     public void Hurt(float damage)
     {
         _stat.Hp -= damage;
+        HurtEvent?.Invoke();
         if (_stat.Hp <= 0)
         {
             Dead();
@@ -102,6 +104,7 @@ public class BaseCharacter : MonoBehaviour
     public void Dead()
     {
         PlayAnimation("die");
+        _hpBar.DisableHpBar();
         _abstractMove.ClearTarget();
         _effectController.Clear();
     }
@@ -144,6 +147,9 @@ public class BaseCharacter : MonoBehaviour
         }
         return false;
     }
+
+    public Action HurtEvent;
+    
     
     public bool IsAttackCooldown() => _abstractAttack ? _abstractAttack.bCoolTime : false;
     public bool IsSkillCooldown() => _abstractSkill ? _abstractSkill.bCoolTime : false;
