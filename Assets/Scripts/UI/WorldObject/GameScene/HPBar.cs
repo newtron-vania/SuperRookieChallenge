@@ -1,24 +1,16 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HPBar : UI_Base
 {
-    private BaseCharacter _character;
-    private Stat _stat;
     [SerializeField] private float _visibleTime = 1f;
+    private BaseCharacter _character;
+
+    private Coroutine _coroutine;
 
     private Slider _slider;
-    enum GameObjects
-    {
-        HPBar,
-    }
-    public override void Init()
-    {
-        Bind<GameObject>(typeof(GameObjects));
-    }
+    private Stat _stat;
 
     private void Start()
     {
@@ -29,21 +21,22 @@ public class HPBar : UI_Base
         _character.HurtEvent += UpdateHpBar;
     }
 
-    private Coroutine _coroutine;
+    public override void Init()
+    {
+        Bind<GameObject>(typeof(GameObjects));
+    }
+
     public void UpdateHpBar()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
+        if (_coroutine != null) StopCoroutine(_coroutine);
         _coroutine = StartCoroutine(OnGameObjectVisible());
-        float ratio = _stat.Hp / _stat.MaxHp;
+        var ratio = _stat.Hp / _stat.MaxHp;
         setHpRatio(ratio);
     }
 
     public void DisableHpBar()
     {
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void setHpRatio(float ratio)
@@ -55,10 +48,15 @@ public class HPBar : UI_Base
         _slider.value = ratio;
     }
 
-    IEnumerator OnGameObjectVisible()
+    private IEnumerator OnGameObjectVisible()
     {
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
         yield return new WaitForSeconds(_visibleTime);
         DisableHpBar();
+    }
+
+    private enum GameObjects
+    {
+        HPBar
     }
 }

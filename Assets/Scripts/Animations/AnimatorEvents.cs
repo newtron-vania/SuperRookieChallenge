@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimatorEvents : MonoBehaviour
@@ -9,9 +6,6 @@ public class AnimatorEvents : MonoBehaviour
 
     public void DeathEnd()
     {
-        if (characterController != null)
-        {
-            characterController.AnimationDeadEnd();
-        }
+        if (characterController != null) characterController.AnimationDeadEnd();
     }
 }

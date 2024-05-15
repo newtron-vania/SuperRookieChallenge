@@ -1,41 +1,46 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
 
 public class BaseCharacter : MonoBehaviour
 {
     public Define.ECharacterType _id = Define.ECharacterType.ECT_Empty;
 
+    private AbstractAttack _abstractAttack;
+    private AbstractMove _abstractMove;
+    private AbstractSkill _abstractSkill;
+    private Animator _animator;
+
     private BTMachine _btMachine;
 
-    private AbstractAttack _abstractAttack;
-    private AbstractSkill _abstractSkill;
-    private AbstractMove _abstractMove;
-
     private EffectController _effectController;
-
-    private Stat _stat;
     private HPBar _hpBar;
-    private Animator _animator;
     private Rigidbody2D _rigidbody;
 
-    public event Action<BaseCharacter> DeathActionEvent;
-    
-    
+    private Stat _stat;
+
+    public Action HurtEvent;
+
+
     private void Awake()
     {
         _effectController = GetComponent<EffectController>();
         _stat = GetComponent<Stat>();
-        _hpBar = gameObject.FindChild<HPBar>(null, true) ?? 
-                 Managers.Resource.Instantiate("UI_HPBar", transform.position + new Vector3(0, 2f, 0), transform).GetComponent<HPBar>();
+        _hpBar = gameObject.FindChild<HPBar>(null, true) ??
+                 Managers.Resource
+                     .Instantiate("UI/WorldObject/UI_HPBar", transform.position + new Vector3(0, 2f, 0), transform)
+                     .GetComponent<HPBar>();
         _animator = GetComponentInChildren<Animator>(true);
         _rigidbody = GetComponent<Rigidbody2D>();
-        
+
         InitStrategy();
     }
+
+    private void Update()
+    {
+        _btMachine?.Operate();
+    }
+
+    public event Action<BaseCharacter> DeathActionEvent;
 
     private void InitStrategy()
     {
@@ -52,10 +57,6 @@ public class BaseCharacter : MonoBehaviour
         _btMachine = btMachine;
     }
 
-    private void Update()
-    {
-        _btMachine?.Operate();
-    }
     //공격 이벤트
     public void Attack()
     {
@@ -68,6 +69,7 @@ public class BaseCharacter : MonoBehaviour
         PlayAnimation("attack");
         _abstractSkill?.UseSkill();
     }
+
     //이동 이벤트
     public bool HasMoveTarget()
     {
@@ -76,10 +78,7 @@ public class BaseCharacter : MonoBehaviour
 
     public void Move()
     {
-        if (!IsAnimationPlaying("walk"))
-        {
-            PlayAnimation("walk");
-        }
+        if (!IsAnimationPlaying("walk")) PlayAnimation("walk");
     }
 
     public void Victory()
@@ -91,17 +90,14 @@ public class BaseCharacter : MonoBehaviour
     {
         _stat.Hp -= damage;
         HurtEvent?.Invoke();
-        if (_stat.Hp <= 0)
-        {
-            Dead();
-        }
+        if (_stat.Hp <= 0) Dead();
     }
 
     public void Idle()
     {
         PlayAnimation("idle");
     }
-    
+
     public void Dead()
     {
         PlayAnimation("die");
@@ -115,20 +111,17 @@ public class BaseCharacter : MonoBehaviour
         DeathActionEvent?.Invoke(this);
         gameObject.SetActive(false);
     }
-    
+
     public void Revive()
     {
         _stat.Hp = _stat.MaxHp;
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
-    
+
     // 버프 및 디버프 처리
     public void SetBuff(IEffect effect)
     {
-        if (effect == null)
-        {
-            return;
-        }
+        if (effect == null) return;
         _effectController.Add(effect);
     }
 
@@ -136,26 +129,40 @@ public class BaseCharacter : MonoBehaviour
     {
         _animator.Play(name, -1, 0f);
     }
-    
-    public bool IsDead() => _stat.Hp <= 0;
+
+    public bool IsDead()
+    {
+        return _stat.Hp <= 0;
+    }
 
     public bool IsAnimationPlaying(string animName)
     {
         var animInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        if (animInfo.IsName(animName) && animInfo.normalizedTime >= 0 && animInfo.normalizedTime < 1f)
-        {
-            return true;
-        }
+        if (animInfo.IsName(animName) && animInfo.normalizedTime >= 0 && animInfo.normalizedTime < 1f) return true;
         return false;
     }
 
-    public Action HurtEvent;
-    
-    
-    public bool IsAttackCooldown() => _abstractAttack ? _abstractAttack.bCoolTime : false;
-    public bool IsSkillCooldown() => _abstractSkill ? _abstractSkill.bCoolTime : false;
-    public bool IsAttackRange() => _abstractAttack ? _abstractAttack.IsInRange() : false;
-    public bool IsSkillRange() => _abstractSkill ? _abstractSkill.IsInRange() : false;
+
+    public bool IsAttackCooldown()
+    {
+        return _abstractAttack ? _abstractAttack.bCoolTime : false;
+    }
+
+    public bool IsSkillCooldown()
+    {
+        return _abstractSkill ? _abstractSkill.bCoolTime : false;
+    }
+
+    public bool IsAttackRange()
+    {
+        return _abstractAttack ? _abstractAttack.IsInRange() : false;
+    }
+
+    public bool IsSkillRange()
+    {
+        return _abstractSkill ? _abstractSkill.IsInRange() : false;
+    }
+
     public bool IsOnlyWalkOrIdleAnimationPlaying()
     {
         var animInfo = _animator.GetCurrentAnimatorStateInfo(0);

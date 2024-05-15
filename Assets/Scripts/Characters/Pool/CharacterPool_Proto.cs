@@ -1,32 +1,19 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class CharacterPool_Proto : MonoBehaviour
 {
-    
-    [SerializeField] 
-    private Transform[] _spawnPoint;
+    [SerializeField] private Transform[] _spawnPoint;
 
-    [SerializeField] 
-    private string[] _spawnCharacterName;
-    
-    [SerializeField]
-    private float _spawnTime = 5f;
-    
-    private Dictionary<BaseCharacter, float> _characterReviveTime = new Dictionary<BaseCharacter, float>();
+    [SerializeField] private string[] _spawnCharacterName;
+
+    [SerializeField] private float _spawnTime = 5f;
+
+    private readonly Dictionary<BaseCharacter, float> _characterReviveTime = new();
     private SimpleCharacterFactory _factory;
-    
-    private BasicGameController _gameController;
 
-    public void Init()
-    {
-        _gameController = Managers.Game.GetGameController() as BasicGameController;
-        _factory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Player);
-        _spawnPoint = GetComponentsInChildren<Transform>(false).Where(c => c.gameObject != this.gameObject).ToArray();
-    }
+    private BasicGameController _gameController;
 
     private void Awake()
     {
@@ -35,9 +22,9 @@ public class CharacterPool_Proto : MonoBehaviour
 
     public void Start()
     {
-        for (int i = 0; i < _spawnCharacterName.Length; i++)
+        for (var i = 0; i < _spawnCharacterName.Length; i++)
         {
-            BaseCharacter character = _factory.Create(_spawnCharacterName[i]);
+            var character = _factory.Create(_spawnCharacterName[i]);
             if (character)
             {
                 character.DeathActionEvent -= CheckCharacterDeath;
@@ -49,34 +36,7 @@ public class CharacterPool_Proto : MonoBehaviour
         }
     }
 
-    public bool GameOver()
-    {
-        bool isOver = true;
-        foreach (var VARIABLE in _characterReviveTime)
-        {
-            if (VARIABLE.Value <= 0f)
-            {
-                isOver = false;
-                break;
-            }
-        }
-        return isOver;
-    }
-
-    private void CheckCharacterDeath(BaseCharacter character)
-    {
-        if (!_characterReviveTime.ContainsKey(character))
-        {
-            // Character not found in the list
-            Debug.Log("Character not found in the list.");
-            return;
-        }
-        
-        if(GameOver()) Managers.Game.EndGame();
-
-        _characterReviveTime[character] = _spawnTime;
-    }
-    void Update()
+    private void Update()
     {
         // for (int i = 0; i < _characterList.Count; i++)
         // {
@@ -90,5 +50,39 @@ public class CharacterPool_Proto : MonoBehaviour
         //         }
         //     }
         // }
+    }
+
+    public void Init()
+    {
+        _gameController = Managers.Game.GetGameController() as BasicGameController;
+        _factory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Player);
+        _spawnPoint = GetComponentsInChildren<Transform>(false).Where(c => c.gameObject != gameObject).ToArray();
+    }
+
+    public bool GameOver()
+    {
+        var isOver = true;
+        foreach (var VARIABLE in _characterReviveTime)
+            if (VARIABLE.Value <= 0f)
+            {
+                isOver = false;
+                break;
+            }
+
+        return isOver;
+    }
+
+    private void CheckCharacterDeath(BaseCharacter character)
+    {
+        if (!_characterReviveTime.ContainsKey(character))
+        {
+            // Character not found in the list
+            Debug.Log("Character not found in the list.");
+            return;
+        }
+
+        if (GameOver()) Managers.Game.EndGame();
+
+        _characterReviveTime[character] = _spawnTime;
     }
 }

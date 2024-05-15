@@ -1,26 +1,23 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-
 
 public abstract class IEffect
 {
-    public abstract Define.EEffectName _effectID { get; }
+    // 버프 지속시간
+    protected float _duration;
 
     // 다음 효과
     private IEffect _effect;
+
     // 버프 최대 지속시간
     protected float _maxDuration = 1f;
-    // 버프 지속시간
-    protected float _duration = 0f;
-    
+    public abstract Define.EEffectName _effectID { get; }
+
     public float MaxDuration
     {
-        set { _maxDuration = value; }
+        set => _maxDuration = value;
     }
-    
+
     public bool bEnd()
     {
         return _duration <= 0;
@@ -33,11 +30,8 @@ public abstract class IEffect
 
     public void ApplyEffect(IEffect effect)
     {
-        IEffect newEffect = effect;
-        if (newEffect != null)
-        {
-            newEffect.ApplyEffect(_effect);
-        }
+        var newEffect = effect;
+        if (newEffect != null) newEffect.ApplyEffect(_effect);
         _effect = newEffect;
     }
 
@@ -45,6 +39,7 @@ public abstract class IEffect
     {
         _duration = MathF.Max(_duration, time);
     }
+
     public abstract void SetBuff(Stat stat);
 
     public abstract void RemoveBuff(Stat stat);

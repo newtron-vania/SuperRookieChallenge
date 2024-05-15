@@ -1,51 +1,48 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
 public abstract class AbstractSkill : MonoBehaviour
 {
+    [SerializeField] protected float _damage;
+
+    [SerializeField] protected float _range;
+
+    [SerializeField] private float _cooltime = 1f;
+
+    [SerializeField] [ReadOnly] private float _currentCooltime;
+
     protected BaseCharacter _character;
-    protected Stat _stat;
-    
+
     protected IEffect _effect;
+    protected Stat _stat;
 
-    [SerializeField] 
-    protected float _damage = 0;
-    
-    [SerializeField]
-    protected float _range = 0;
+    public float Range => _range;
 
-    [SerializeField] 
-    private float _cooltime = 1f;
-    
-    [SerializeField, ReadOnly] 
-    private float _currentCooltime = 0f;
+    public bool bCoolTime => _currentCooltime > 0f;
 
     private void Update()
     {
-        if (_currentCooltime > 0)
-        {
-            _currentCooltime = Mathf.Max(_currentCooltime - Time.deltaTime * _stat.Accelerate, 0);
-        }
+        if (_currentCooltime > 0) _currentCooltime = Mathf.Max(_currentCooltime - Time.deltaTime * _stat.Accelerate, 0);
+    }
+
+    private void OnDisable()
+    {
+        _currentCooltime = 0f;
     }
 
     public void ResetCooltime()
     {
         _currentCooltime = _cooltime;
     }
+
     public void Init(BaseCharacter character, Stat stat)
     {
         _character = character;
         _stat = stat;
-        List<IEffectScriptableObj> effects = GetComponent<EffectStorage>()?._skillEffect;
+        var effects = GetComponent<EffectStorage>()?._skillEffect;
 
-        if (effects == null)
-        {
-            return;
-        }
-        
+        if (effects == null) return;
+
         foreach (var VARIABLE in effects)
         {
             if (_effect == null)
@@ -53,24 +50,11 @@ public abstract class AbstractSkill : MonoBehaviour
                 _effect = VARIABLE.GetEffect();
                 continue;
             }
+
             _effect.ApplyEffect(VARIABLE.GetEffect());
         }
     }
-    
-    public float Range
-    {
-        get { return _range; }
-    }
-    public abstract bool IsInRange();
 
-    public bool bCoolTime
-    {
-        get { return _currentCooltime > 0f; }
-    }
+    public abstract bool IsInRange();
     public abstract bool UseSkill();
-    
-    private void OnDisable()
-    {
-        _currentCooltime = 0f;
-    }
 }

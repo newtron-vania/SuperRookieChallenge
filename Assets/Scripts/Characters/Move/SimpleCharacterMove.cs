@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public class SimpleCharacterMove : AbstractMove
 {
-    [SerializeField] 
-    private float _range = 9999f;
-    
+    [SerializeField] private float _range = 9999f;
+
     public override bool Move()
     {
         if (!bhasTarget())
@@ -17,54 +13,47 @@ public class SimpleCharacterMove : AbstractMove
             return false;
         }
 
-        if ((_target.position - transform.position).magnitude < 0.1f)
-        {
-            return false;
-        }
-        
-        Vector3 dir = (_target.position - _character.transform.position).normalized;
+        if ((_target.position - transform.position).magnitude < 0.1f) return false;
+
+        var dir = (_target.position - _character.transform.position).normalized;
         _character.transform.position += Time.deltaTime * _stat.Accelerate * dir;
 
-        Vector3 scale = _character.transform.localScale;
+        var scale = _character.transform.localScale;
         if (_character.transform.position.x < _target.transform.position.x)
-        {
             _character.transform.localScale = new Vector3(-1 * Mathf.Abs(scale.x), scale.y, scale.z);
-        }
         else
-        {
             _character.transform.localScale = new Vector3(1 * Mathf.Abs(scale.x), scale.y, scale.z);
-        }
-        
+
         return true;
     }
-    
+
     private void FindTarget()
     {
-        Vector3 myPos = transform.position;
-        RaycastHit2D[] targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, 0f, SetTargetLayer());
+        var myPos = transform.position;
+        var targets = Physics2D.CircleCastAll(myPos, _range, Vector2.up, 0f, SetTargetLayer());
 
         if (targets.Length <= 0)
         {
             _target = null;
             return;
         }
-        
+
         Array.Sort(targets, (hit1, hit2) => hit1.distance.CompareTo(hit2.distance));
 
         _target = targets[0].transform;
     }
-    
+
     private int SetTargetLayer()
     {
         // Create layer masks by specifying the layers you are interested in
-        int monsterLayerMask = 1 << LayerMask.NameToLayer("monster");
-        int playerLayerMask = 1 << LayerMask.NameToLayer("player");
+        var monsterLayerMask = 1 << LayerMask.NameToLayer("monster");
+        var playerLayerMask = 1 << LayerMask.NameToLayer("player");
 
         // Combine the masks using bitwise OR
-        int combinedMask = monsterLayerMask | playerLayerMask;
+        var combinedMask = monsterLayerMask | playerLayerMask;
 
         // Exclude this GameObject's layer using bitwise operations
-        int finalMask = combinedMask & ~(1 << gameObject.layer);
+        var finalMask = combinedMask & ~(1 << gameObject.layer);
 
         return finalMask;
     }

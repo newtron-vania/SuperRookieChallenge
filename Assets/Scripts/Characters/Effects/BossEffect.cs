@@ -1,19 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossEffect : IEffect
 {
-    private float _maxDuration = float.MaxValue;
-    
-    
-    private float _hpUp = 2f;
-    private float _damageUp = 1.5f;
-    private float _sizeUp = 1.5f;
-    public override Define.EEffectName _effectID
-    {
-        get { return Define.EEffectName.EEN_Boss; }
-    }
+    private readonly float _damageUp = 1.5f;
+
+
+    private readonly float _hpUp = 2f;
+    private readonly float _maxDuration = float.MaxValue;
+    private readonly float _sizeUp = 1.5f;
+
+    public override Define.EEffectName _effectID => Define.EEffectName.EEN_Boss;
 
     public override void SetBuff(Stat stat)
     {

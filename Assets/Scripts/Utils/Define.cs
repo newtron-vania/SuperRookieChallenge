@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Define
+﻿public class Define
 {
     public enum ECharacterType
     {
@@ -18,24 +14,12 @@ public class Define
         EEN_Stun,
         EEN_Bleed,
         EEN_Burned,
-        EEN_Boss,
+        EEN_Boss
     }
-    
+
     public enum PopupUIGroup
     {
-        Unknown,
-    }
-
-    public enum SceneUI
-    {
-        Unknown,
-    }
-    
-    public enum UIEvent
-    {
-        Click,
-        Drag,
-
+        Unknown
     }
 
     public enum SceneType
@@ -44,4 +28,14 @@ public class Define
         GameScene
     }
 
+    public enum SceneUI
+    {
+        Unknown
+    }
+
+    public enum UIEvent
+    {
+        Click,
+        Drag
+    }
 }

@@ -1,20 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceManager
 {
-    
-    public T Load<T>(string path) where T:Object
+    public T Load<T>(string path) where T : Object
     {
-        if(typeof(T) == typeof(GameObject))
+        if (typeof(T) == typeof(GameObject))
         {
-            string name = path;
-            int index = name.LastIndexOf('/');
+            var name = path;
+            var index = name.LastIndexOf('/');
             if (index >= 0)
                 name = name.Substring(index + 1);
 
-            GameObject go = Managers.Pool.GetOriginal(name);
+            var go = Managers.Pool.GetOriginal(name);
             if (go != null)
                 return go as T;
         }
@@ -24,21 +21,21 @@ public class ResourceManager
 
     public Sprite LoadSprite(string name)
     {
-        string path = $"Sprites/{name}";
+        var path = $"Sprites/{name}";
 
-        Sprite original = Resources.Load<Sprite>(path);
+        var original = Resources.Load<Sprite>(path);
         if (original == null)
         {
             Debug.Log($"Faild to sprite : {path}");
-            original = Resources.Load<Sprite>($"Sprites/NullErrorImg/Error");
+            original = Resources.Load<Sprite>("Sprites/NullErrorImg/Error");
         }
+
         return original;
-
-
     }
+
     public GameObject Instantiate(string path, Transform parent = null)
     {
-        GameObject original = Load<GameObject>($"Prefabs/{path}");
+        var original = Load<GameObject>($"Prefabs/{path}");
         if (original == null)
         {
             Debug.Log($"Faild to load prefab : {path}");
@@ -49,15 +46,16 @@ public class ResourceManager
             return Managers.Pool.Pop(original, parent).gameObject;
 
 
-        GameObject go = Object.Instantiate(original, parent);
+        var go = Object.Instantiate(original, parent);
         go.name = original.name;
 
         return go;
     }
+
     public GameObject Instantiate(string path, Vector3 position, Transform parent = null)
     {
-        GameObject original = Load<GameObject>($"Prefabs/{path}");
-        if(original == null)
+        var original = Load<GameObject>($"Prefabs/{path}");
+        if (original == null)
         {
             Debug.Log($"Faild to load prefab : {path}");
             return null;
@@ -87,7 +85,6 @@ public class ResourceManager
             go.transform.position = position;
             return go;
         }
-           
 
 
         go = Object.Instantiate(original, position, Quaternion.identity, parent);
@@ -99,14 +96,11 @@ public class ResourceManager
 
     public void Destroy(GameObject obj, float time = 0)
     {
-        if(obj == null)
-        {
-            return;
-        }
+        if (obj == null) return;
 
-        
-        Poolable poolable = obj.GetComponent<Poolable>();
-        if(poolable != null)
+
+        var poolable = obj.GetComponent<Poolable>();
+        if (poolable != null)
         {
             Managers.Pool.Push(poolable, time);
             return;

@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 
 public interface IBTNode
 {
@@ -9,36 +7,46 @@ public interface IBTNode
     {
         ENS_Running,
         ENS_Success,
-        ENS_Failure,
+        ENS_Failure
     }
 
     public ENodeState Evaluate();
 }
-public class ConditionNode : IBTNode {
-    Func<bool> _condition;
-    public ConditionNode(Func<bool> condition) {
+
+public class ConditionNode : IBTNode
+{
+    private readonly Func<bool> _condition;
+
+    public ConditionNode(Func<bool> condition)
+    {
         _condition = condition;
     }
 
-    public IBTNode.ENodeState Evaluate() {
+    public IBTNode.ENodeState Evaluate()
+    {
         return _condition.Invoke() ? IBTNode.ENodeState.ENS_Success : IBTNode.ENodeState.ENS_Failure;
     }
 }
 
-public class ActionNode : IBTNode {
-    Action _action;
-    public ActionNode(Action action) {
+public class ActionNode : IBTNode
+{
+    private readonly Action _action;
+
+    public ActionNode(Action action)
+    {
         _action = action;
     }
 
-    public IBTNode.ENodeState Evaluate() {
+    public IBTNode.ENodeState Evaluate()
+    {
         _action();
         return IBTNode.ENodeState.ENS_Success;
     }
 }
+
 public sealed class SelectorNode : IBTNode
 {
-    List<IBTNode> _childs;
+    private readonly List<IBTNode> _childs;
 
     public SelectorNode(List<IBTNode> childs)
     {
@@ -51,7 +59,6 @@ public sealed class SelectorNode : IBTNode
             return IBTNode.ENodeState.ENS_Failure;
 
         foreach (var child in _childs)
-        {
             switch (child.Evaluate())
             {
                 case IBTNode.ENodeState.ENS_Running:
@@ -59,7 +66,6 @@ public sealed class SelectorNode : IBTNode
                 case IBTNode.ENodeState.ENS_Success:
                     return IBTNode.ENodeState.ENS_Success;
             }
-        }
 
         return IBTNode.ENodeState.ENS_Failure;
     }
@@ -67,7 +73,7 @@ public sealed class SelectorNode : IBTNode
 
 public sealed class SequenceNode : IBTNode
 {
-    List<IBTNode> _childs;
+    private readonly List<IBTNode> _childs;
 
     public SequenceNode(List<IBTNode> childs)
     {
@@ -80,7 +86,6 @@ public sealed class SequenceNode : IBTNode
             return IBTNode.ENodeState.ENS_Failure;
 
         foreach (var child in _childs)
-        {
             switch (child.Evaluate())
             {
                 case IBTNode.ENodeState.ENS_Running:
@@ -90,7 +95,6 @@ public sealed class SequenceNode : IBTNode
                 case IBTNode.ENodeState.ENS_Failure:
                     return IBTNode.ENodeState.ENS_Failure;
             }
-        }
 
         return IBTNode.ENodeState.ENS_Success;
     }
