@@ -24,32 +24,49 @@ public class CharacterPool_Proto : MonoBehaviour
     {
         for (var i = 0; i < _spawnCharacterName.Length; i++)
         {
-            var character = _factory.Create(_spawnCharacterName[i]);
-            if (character)
+            BaseCharacter character = null;
+            if (_gameController._characters.Count() == _spawnCharacterName.Length)
             {
-                character.DeathActionEvent -= CheckCharacterDeath;
-                character.DeathActionEvent += CheckCharacterDeath;
-                _gameController.RegisterCharacter(character);
-                _characterReviveTime.Add(character, 0f);
-                character.transform.position = _spawnPoint[i].position;
+                character = _gameController._characters[i];
+                if (character)
+                {
+                    character.DeathActionEvent -= CheckCharacterDeath;
+                    character.DeathActionEvent += CheckCharacterDeath;
+                    _characterReviveTime.Add(character, 0f);
+                    character.transform.position = _spawnPoint[i].position;
+                }
+            }
+            else
+            {
+                character = _factory.Create(_spawnCharacterName[i]);
+                //파괴되지 않도록 설정
+                DontDestroyOnLoad(character);
+                if (character)
+                {
+                    character.DeathActionEvent -= CheckCharacterDeath;
+                    character.DeathActionEvent += CheckCharacterDeath;
+                    _gameController.RegisterCharacter(character);
+                    _characterReviveTime.Add(character, 0f);
+                    character.transform.position = _spawnPoint[i].position;
+                }
             }
         }
     }
 
     private void Update()
     {
-        // for (int i = 0; i < _characterList.Count; i++)
-        // {
-        //     BaseCharacter character = _characterList[i];
-        //     if (character.IsDead())
-        //     {
-        //         _characterReviveTime[i] = Mathf.Max(_characterReviveTime[i] - Time.deltaTime, 0);
-        //         if (_characterReviveTime[i] <= 0)
-        //         {
-        //             character.Revive();
-        //         }
-        //     }
-        // }
+        foreach (var character in _gameController._characters)
+        {
+            if (character.IsDead())
+            {
+                _characterReviveTime[character] = Mathf.Max(_characterReviveTime[character] - Time.deltaTime, 0);
+                if (_characterReviveTime[character] <= 0)
+                {
+                    character.Revive();
+                    character.transform.position = _spawnPoint[Random.Range(0, _spawnPoint.Length)].position;
+                }
+            }
+        }
     }
 
     public void Init()
@@ -57,6 +74,7 @@ public class CharacterPool_Proto : MonoBehaviour
         _gameController = Managers.Game.GetGameController() as BasicGameController;
         _factory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Player);
         _spawnPoint = GetComponentsInChildren<Transform>(false).Where(c => c.gameObject != gameObject).ToArray();
+        _spawnCharacterName = (_gameController.LoadGameData() as BasicGameData).Characters;
     }
 
     public bool GameOver()

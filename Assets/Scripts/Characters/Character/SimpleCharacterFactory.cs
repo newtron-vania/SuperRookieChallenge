@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SimpleCharacterFactory
 {
@@ -12,7 +13,7 @@ public class SimpleCharacterFactory
 
     public BaseCharacter Create(string unitName)
     {
-        var character = Managers.Resource.Instantiate($"Character/{unitName}").GetComponent<BaseCharacter>();
+        var character = Managers.Resource.Instantiate($"Character/{unitName}", new Vector3(999f,999f,999f)).GetComponent<BaseCharacter>();
         if (character == null)
         {
             Debug.Log($"Cannot Find Character {unitName}");
@@ -32,6 +33,7 @@ public class SimpleCharacterFactory
         {
             case Define.ECharacterType.ECT_Player:
                 BTM = CreateBTMPlayer(character);
+                //파괴되지 않도록 설정
                 break;
             case Define.ECharacterType.ECT_Enemy:
                 BTM = CreateBTMEnemy(character);

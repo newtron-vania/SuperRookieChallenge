@@ -24,7 +24,16 @@ public class Stat : MonoBehaviour
     public int Level
     {
         get => _lv;
-        set => _lv = value;
+        set
+        {
+            if (_lv < value)
+            {
+                _maxHp += 50 * value - _lv;
+                _hp = _maxHp;
+                _damage += 5 * value - _lv;
+            }
+            _lv = value;
+        }
     }
 
     public float Hp

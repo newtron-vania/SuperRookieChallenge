@@ -25,10 +25,8 @@ public class BaseCharacter : MonoBehaviour
     {
         _effectController = GetComponent<EffectController>();
         _stat = GetComponent<Stat>();
-        _hpBar = gameObject.FindChild<HPBar>(null, true) ??
-                 Managers.Resource
-                     .Instantiate("UI/WorldObject/UI_HPBar", transform.position + new Vector3(0, 2f, 0), transform)
-                     .GetComponent<HPBar>();
+        _hpBar = gameObject.FindChild<HPBar>(null, true) ?? Managers.UI.MakeWorldSpaceUI<HPBar>(transform, "UI_HPBar");
+        _hpBar.transform.localPosition = new Vector3(0f, 2f, 0f);
         _animator = GetComponentInChildren<Animator>(true);
         _rigidbody = GetComponent<Rigidbody2D>();
 

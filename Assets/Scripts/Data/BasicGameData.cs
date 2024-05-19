@@ -2,5 +2,5 @@ using System.Collections.Generic;
 
 public class BasicGameData : IGameData
 {
-    public List<string> Characters;
+    public string[] Characters = new string[4];
 }

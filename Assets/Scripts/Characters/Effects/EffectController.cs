@@ -29,8 +29,15 @@ public class EffectController : MonoBehaviour
     public void Add(IEffect effect)
     {
         Debug.Log($"Effect {effect} Added!");
-        _effectDict.Add(effect._effectID, effect);
-        _effectList.Add(effect._effectID);
+        if (_effectDict.ContainsKey(effect._effectID))
+        {
+            _effectDict[effect._effectID] = effect;
+        }
+        else
+        {
+            _effectDict.Add(effect._effectID, effect);
+            _effectList.Add(effect._effectID);
+        }
         effect.SetBuff(_stat);
     }
 

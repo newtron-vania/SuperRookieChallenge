@@ -15,7 +15,7 @@ public class MonsterPool : MonoBehaviour
 
     [SerializeField] private int _bossSpawnCount = 5;
 
-    private readonly HashSet<BaseCharacter> _spawnUnit = new();
+    private BasicGameController _gamecontroller;
 
     private SimpleCharacterFactory _bossFactory;
 
@@ -51,12 +51,15 @@ public class MonsterPool : MonoBehaviour
         _monsterFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Enemy);
         _bossFactory = new SimpleCharacterFactory(Define.ECharacterType.ECT_Boss);
         _spawnPoint = GetComponentsInChildren<Transform>(false).Where(c => c.gameObject != gameObject).ToArray();
+        _gamecontroller = Managers.Game.GetGameController() as BasicGameController;
     }
 
     private void SpawnBoss()
     {
         BaseCharacter Boss = null;
         Boss = _bossFactory.Create(_spawnMonsterName);
+        _gamecontroller._monsters.Add(Boss);
+        Boss.GetComponent<Stat>().Level = _gamecontroller.level;
         Boss.transform.position = _spawnPoint[Random.Range(1, _spawnPoint.Length)].position;
         Boss.DeathActionEvent -= CheckBossDeath;
         Boss.DeathActionEvent += CheckBossDeath;
@@ -67,7 +70,8 @@ public class MonsterPool : MonoBehaviour
     {
         _bSpawning = true;
         var monster = _monsterFactory.Create(_spawnMonsterName);
-        _spawnUnit.Add(monster);
+        monster.GetComponent<Stat>().Level = _gamecontroller.level;
+        _gamecontroller._monsters.Add(monster);
         monster.DeathActionEvent -= CheckMonsterDeath;
         monster.DeathActionEvent += CheckMonsterDeath;
         monster.transform.position = _spawnPoint[Random.Range(1, _spawnPoint.Length)].position;
@@ -77,7 +81,7 @@ public class MonsterPool : MonoBehaviour
 
     private void CheckMonsterDeath(BaseCharacter character)
     {
-        _spawnUnit.Remove(character);
+        _gamecontroller._monsters.Remove(character);
         Managers.Resource.Destroy(character.gameObject);
         AddKillCount(1);
     }
@@ -87,5 +91,6 @@ public class MonsterPool : MonoBehaviour
         _killCount = 0; // Reset
         bBossSpawn = false;
         //게임 재시작
+        Managers.Game.VictoryGame();
     }
 }

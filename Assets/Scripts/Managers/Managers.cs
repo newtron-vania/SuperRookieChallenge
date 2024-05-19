@@ -13,6 +13,23 @@ public class Managers : MonoBehaviour
         }
     }
 
+    #region core
+
+    private readonly ResourceManager _resource = new();
+    private readonly SceneManagerEx _scene = new();
+    private readonly UIManager _ui = new();
+    private readonly PoolManager _pool = new();
+    private readonly GameManager _game = new();
+
+
+    public static ResourceManager Resource => Instance._resource;
+    public static SceneManagerEx Scene => Instance._scene;
+    public static UIManager UI => Instance._ui;
+    public static PoolManager Pool => Instance._pool;
+    public static GameManager Game => Instance._game;
+
+    #endregion
+    
     private void Awake()
     {
         Init();
@@ -42,20 +59,5 @@ public class Managers : MonoBehaviour
     }
 
 
-    #region core
-
-    private readonly ResourceManager _resource = new();
-    private readonly SceneManagerEx _scene = new();
-    private readonly UIManager _ui = new();
-    private readonly PoolManager _pool = new();
-    private readonly GameManager _game = new();
-
-
-    public static ResourceManager Resource => Instance._resource;
-    public static SceneManagerEx Scene => Instance._scene;
-    public static UIManager UI => Instance._ui;
-    public static PoolManager Pool => Instance._pool;
-    public static GameManager Game => Instance._game;
-
-    #endregion
+  
 }

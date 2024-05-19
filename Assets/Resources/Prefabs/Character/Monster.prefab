@@ -98,7 +98,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e6cd28e75ec294e47afda81db9c438de, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be22bc8d694526a6b7df7a7bda1394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectList: 
 --- !u!61 &1918618251169025579
 BoxCollider2D:
   m_ObjectHideFlags: 0

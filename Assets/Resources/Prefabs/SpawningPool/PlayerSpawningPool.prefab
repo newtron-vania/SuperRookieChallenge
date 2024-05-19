@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5060520331120600136}
   - component: {fileID: 1480898207301735930}
+  - component: {fileID: -5561071404698024414}
   m_Layer: 0
   m_Name: PlayerSpawningPool
   m_TagString: Untagged
@@ -74,7 +75,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2808895499325264435}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96786ac2196e24f99975f8adae606c8c, type: 3}
   m_Name: 
@@ -86,9 +87,25 @@ MonoBehaviour:
   - {fileID: 0}
   _spawnCharacterName:
   - Knight
-  - Thief
-  - Archer
-  - Priest
+  - Knight
+  - Knight
+  - Knight
+  _spawnTime: 5
+  _characterReviveTime: []
+--- !u!114 &-5561071404698024414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808895499325264435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ce63b476574fa4ad15b0564b7acb1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoint: []
+  _spawnCharacterName: []
   _spawnTime: 5
 --- !u!1 &2936155245542459443
 GameObject:

@@ -11,7 +11,8 @@ public class CharacterPool : MonoBehaviour
     [SerializeField] private float _spawnTime = 5f;
 
     private readonly List<BaseCharacter> _characterList = new();
-    private readonly List<float> _characterReviveTime = new();
+    [SerializeField]
+    private List<float> _characterReviveTime = new();
     private SimpleCharacterFactory _factory;
 
     private void Awake()
@@ -40,10 +41,15 @@ public class CharacterPool : MonoBehaviour
         for (var i = 0; i < _characterList.Count; i++)
         {
             var character = _characterList[i];
-            if (character.IsDead())
+            if (_characterReviveTime[i] > 0)
             {
                 _characterReviveTime[i] = Mathf.Max(_characterReviveTime[i] - Time.deltaTime, 0);
-                if (_characterReviveTime[i] <= 0) character.Revive();
+                if (_characterReviveTime[i] <= 0)
+                {
+                    character.Revive();
+                    Debug.Log($"Character {character.name} Revive!");
+                    character.transform.position = _spawnPoint[Random.Range(0, _spawnPoint.Length)].position;
+                }
             }
         }
     }

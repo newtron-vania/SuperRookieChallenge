@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 public class HPBar : UI_Base
 {
+    enum GameObjects
+    {
+        HPBar,
+    }
+    
     [SerializeField] private float _visibleTime = 1f;
     private BaseCharacter _character;
 
@@ -19,6 +24,7 @@ public class HPBar : UI_Base
         _slider = GetObject((int)GameObjects.HPBar).GetComponent<Slider>();
         _character.HurtEvent -= UpdateHpBar;
         _character.HurtEvent += UpdateHpBar;
+        DisableHpBar();
     }
 
     public override void Init()
@@ -28,12 +34,17 @@ public class HPBar : UI_Base
 
     public void UpdateHpBar()
     {
+        EnableHpBar();
         if (_coroutine != null) StopCoroutine(_coroutine);
         _coroutine = StartCoroutine(OnGameObjectVisible());
         var ratio = _stat.Hp / _stat.MaxHp;
         setHpRatio(ratio);
     }
 
+    public void EnableHpBar()
+    {
+        gameObject.SetActive(true);
+    }
     public void DisableHpBar()
     {
         gameObject.SetActive(false);
@@ -55,8 +66,4 @@ public class HPBar : UI_Base
         DisableHpBar();
     }
 
-    private enum GameObjects
-    {
-        HPBar
-    }
 }

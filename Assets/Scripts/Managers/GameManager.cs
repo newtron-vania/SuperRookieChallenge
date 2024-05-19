@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class GameManager
 {
     private IGameController _gameController;
@@ -15,6 +17,11 @@ public class GameManager
 
     public void StartGame()
     {
+        if (_gameController == null)
+        {
+            Time.timeScale = 1f;
+            return;
+        }
         _gameController.StartGame();
     }
 
@@ -31,5 +38,16 @@ public class GameManager
     public IGameData LoadGameData()
     {
         return _gameController.LoadGameData();
+    }
+
+    public void VictoryGame()
+    {
+        _gameController.VictoryGame();
+    }
+
+    public void Clear()
+    {
+        _gameController.Clear();
+        _gameController = null;
     }
 }

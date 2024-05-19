@@ -20,9 +20,9 @@ public class SimpleEnemyMove : AbstractMove
 
         var scale = _character.transform.localScale;
         if (_character.transform.position.x < _target.transform.position.x)
-            _character.transform.localScale = new Vector3(-1 * Mathf.Abs(scale.x), scale.y, scale.z);
-        else
             _character.transform.localScale = new Vector3(1 * Mathf.Abs(scale.x), scale.y, scale.z);
+        else
+            _character.transform.localScale = new Vector3(-1 * Mathf.Abs(scale.x), scale.y, scale.z);
 
         return true;
     }

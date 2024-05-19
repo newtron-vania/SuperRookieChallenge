@@ -8,6 +8,14 @@
         ECT_Boss
     }
 
+    public enum EPlayerCharacterType
+    {
+        Archer,
+        Priest,
+        Thief,
+        Knight
+    }
+
     public enum EEffectName
     {
         EEN_None,
@@ -19,18 +27,24 @@
 
     public enum PopupUIGroup
     {
-        Unknown
+        Unknown,
+        UIGameSetting,
+        UIVictory,
+        UIGameOver,
     }
 
     public enum SceneType
     {
         Unknown,
-        GameScene
+        GameScene,
+        MainScene
     }
 
     public enum SceneUI
     {
-        Unknown
+        Unknown,
+        UIMain,
+        UIGameScene,
     }
 
     public enum UIEvent
