@@ -5,12 +5,12 @@ public class CameraController : MonoBehaviour
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
     private Camera _camera;
-    private Transform _target;
-    private bool _isCameraActive = true;
+    [SerializeField] private Transform _target;
+    [SerializeField] private bool _isCameraActive = true;
 
     private void Awake()
     {
-        _camera = Camera.main;
+        _camera = GetComponent<Camera>();
         if (ReferenceEquals(_camera, null))
         {
             Debug.LogError("Main camera not found!");
@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (ReferenceEquals(_camera, null) || ReferenceEquals(_target, null) || !_isCameraActive) return;
+        if (_camera || _target || !_isCameraActive) return;
 
         FollowTarget();
     }

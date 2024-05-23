@@ -23,7 +23,7 @@ public abstract class IEffect
         return _duration <= 0;
     }
 
-    public void onUpdate()
+    public virtual void onUpdate()
     {
         _duration = Mathf.Max(_duration - Time.deltaTime, 0);
     }

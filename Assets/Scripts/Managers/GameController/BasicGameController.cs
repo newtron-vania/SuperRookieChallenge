@@ -5,20 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class BasicGameController : IGameController
 {
-    public Action EventNextLevel;
-    public List<BaseCharacter> _characters = new();
-    public HashSet<BaseCharacter> _monsters = new();
+    public Action EventNextLevel; // 다음 레벨로 넘어가는 이벤트를 처리하는 액션
 
-    public int level = 1;
+    public List<BaseCharacter> _characters = new(); // 게임 내 캐릭터 객체 리스트
+    public HashSet<BaseCharacter> _monsters = new(); // 게임 내 몬스터 객체 집합
 
-    private BasicGameData _data;
+    public int level = 1; // 현재 게임 레벨
 
-    public BasicGameController(IGameData data)
+    private BasicGameData _data; // 게임 데이터 저장을 위한 변수
+
+    public BasicGameController(IGameData data) // 생성자에서 게임 데이터를 초기화
     {
         SaveGameData(data);
     }
 
-    public int Level { get; set; } = 1;
+    public int Level { get; set; } = 1; // 게임 레벨 속성
 
     public void StartGame()
     {
