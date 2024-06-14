@@ -21,7 +21,7 @@
         EEN_None,
         EEN_Stun,
         EEN_Bleed,
-        EEN_Burned,
+        EEN_Burns,
         EEN_Boss
     }
 

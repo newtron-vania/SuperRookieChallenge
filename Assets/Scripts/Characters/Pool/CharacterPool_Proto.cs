@@ -62,6 +62,7 @@ public class CharacterPool_Proto : MonoBehaviour
                 _characterReviveTime[character] = Mathf.Max(_characterReviveTime[character] - Time.deltaTime, 0);
                 if (_characterReviveTime[character] <= 0)
                 {
+                    character.gameObject.SetActive(true);
                     character.Revive();
                     character.transform.position = _spawnPoint[Random.Range(0, _spawnPoint.Length)].position;
                 }

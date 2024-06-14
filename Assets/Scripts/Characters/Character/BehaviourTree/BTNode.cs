@@ -3,16 +3,18 @@ using System.Collections.Generic;
 
 public interface IBTNode
 {
+		// 노드 실행 결과 상태
     public enum ENodeState
     {
         ENS_Running,
         ENS_Success,
         ENS_Failure
     }
-
+		// 노드 실행
     public ENodeState Evaluate();
 }
 
+// 노드 실행 성공 여부 반환
 public class ConditionNode : IBTNode
 {
     private readonly Func<bool> _condition;
@@ -28,6 +30,7 @@ public class ConditionNode : IBTNode
     }
 }
 
+// 이벤트의 무조건적인 실행 노드
 public class ActionNode : IBTNode
 {
     private readonly Action _action;
@@ -44,6 +47,7 @@ public class ActionNode : IBTNode
     }
 }
 
+// 자식 노드에서 진행중이거나 실행 성공한 노드가 존재할 시 바로 반환
 public sealed class SelectorNode : IBTNode
 {
     private readonly List<IBTNode> _childs;
@@ -71,6 +75,7 @@ public sealed class SelectorNode : IBTNode
     }
 }
 
+// 자식 노드에서 진행 중이거나 실패한 행동이 존재할 경우 반환, 성공한 노드가 있다면 진행
 public sealed class SequenceNode : IBTNode
 {
     private readonly List<IBTNode> _childs;

@@ -10,7 +10,8 @@ public class SimpleCharacterFactory
     {
         _id = id;
     }
-
+    
+    // 캐릭터 생성
     public BaseCharacter Create(string unitName)
     {
         var character = Managers.Resource.Instantiate($"Character/{unitName}", new Vector3(999f,999f,999f)).GetComponent<BaseCharacter>();
@@ -24,7 +25,7 @@ public class SimpleCharacterFactory
         return character;
     }
 
-
+    // 생성 캐릭터의 초기화
     private void Init(BaseCharacter character, Define.ECharacterType id)
     {
         character._id = id;

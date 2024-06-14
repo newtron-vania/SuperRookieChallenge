@@ -24,6 +24,7 @@ public class BaseCharacter : MonoBehaviour
     private EffectController _effectController;
     private HPBar _hpBar;
     private Rigidbody2D _rigidbody;
+    private Collider2D _collider;
 
 
     private void Awake()
@@ -34,7 +35,9 @@ public class BaseCharacter : MonoBehaviour
         _hpBar.transform.localPosition = new Vector3(0f, 2f, 0f);
         _animator = GetComponentInChildren<Animator>(true);
         _rigidbody = GetComponent<Rigidbody2D>();
-
+        _collider = GetComponent<Collider2D>();
+        _collider.bounds
+        
         InitStrategy();
     }
 

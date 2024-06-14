@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
-
 public class EffectController : MonoBehaviour
 {
     [SerializeField] [ReadOnly(true)] private List<Define.EEffectName> _effectList = new();
@@ -11,6 +10,7 @@ public class EffectController : MonoBehaviour
     private Stat _stat;
 
     private void Awake()
+
     {
         _stat = GetComponent<Stat>();
     }
